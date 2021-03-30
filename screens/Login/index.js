@@ -1,6 +1,6 @@
 // import CheckBox from "@react-native-community/checkbox";
 import React, { useState, useContext } from "react";
-import { View } from "react-native";
+import { Alert, View } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import Container from "../../components/Container";
 import DismissKeyboardView from "../../components/DismissKeyboardView";
@@ -10,6 +10,9 @@ import TextInputWithIcon from "../../components/TextInputWithIcon";
 import AppContext from "../../context";
 import { Styles } from "./style";
 import Button from "../../components/Button";
+import { handleLoginConnect } from "./action";
+import { STATUS_MESSAGE } from "../../constants";
+import { setTokenFromStorage } from "../../utils";
 
 const LoginScreen = ({ navigation }) => {
   const context = useContext(AppContext);
@@ -17,6 +20,21 @@ const LoginScreen = ({ navigation }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isCheck, setIsCheck] = useState(false);
+
+  const handleLogin = async () => {
+    const response = await handleLoginConnect({ username, password });
+
+    if (response.message === STATUS_MESSAGE.SUCCESS) {
+      await setTokenFromStorage(response.data.access_token);
+      context.setIsLogin(true);
+    } else {
+      Alert.alert(response.data.message);
+    }
+  };
+
+  const handleForgetPassword = async () => {
+    // const response = await
+  };
 
   return (
     <KeyboardView>
@@ -51,14 +69,13 @@ const LoginScreen = ({ navigation }) => {
               /> */}
               <TextCustom title="Remember" />
             </View>
-            <TextCustom title="Forget password?" />
+            <TextCustom
+              title="Forget password?"
+              onPress={handleForgetPassword}
+            />
           </View>
 
-          <Button
-            onPress={() => {
-              context.setIsLogin(true);
-            }}
-          >
+          <Button onPress={handleLogin}>
             <TextCustom
               title="Log in"
               style={[Styles.buttonText, Styles.bold]}

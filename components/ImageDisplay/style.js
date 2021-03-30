@@ -12,4 +12,20 @@ export default StyleSheet.create({
     width: "100%",
     aspectRatio: 4 / 3,
   },
+  iconClose: {
+    alignSelf: "flex-end",
+    color: "#fff",
+  },
+  modal: {
+    flex: 1,
+    justifyContent: "center",
+    backgroundColor: "rgba(0,0,0, 0.7)",
+  },
+  imageShowContainer: {
+    position: "absolute",
+    paddingHorizontal: 20,
+  },
+  outsideImage: {
+    flex: 1,
+  },
 });

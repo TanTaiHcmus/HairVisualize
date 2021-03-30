@@ -8,6 +8,7 @@ import { headerNavigationStyle } from "../../constants";
 import LoadYourHair from "../../screens/LoadYourHair";
 import VisualizeScreen from "../../screens/Visualize";
 import HairStyleBankScreen from "../../screens/HairStyleBank";
+import UserInfoScreen from "../../screens/UserInfo";
 
 const HomeStack = createStackNavigator();
 
@@ -41,6 +42,16 @@ const HairStyleBankStackScreen = () => {
   );
 };
 
+const UserInfoStack = createStackNavigator();
+
+const UserInfoStackScreen = () => {
+  return (
+    <UserInfoStack.Navigator screenOptions={headerNavigationStyle}>
+      <UserInfoStack.Screen name="UserInformation" component={UserInfoScreen} />
+    </UserInfoStack.Navigator>
+  );
+};
+
 const AppNavigator = createBottomTabNavigator();
 
 const AppNavigatorScreen = () => {
@@ -59,6 +70,10 @@ const AppNavigatorScreen = () => {
                 iconName = "university";
                 break;
               }
+              case "UserInfo": {
+                iconName = "user-alt";
+                break;
+              }
               default: {
                 break;
               }
@@ -66,7 +81,7 @@ const AppNavigatorScreen = () => {
             return (
               <Icon
                 name={iconName}
-                size={30}
+                size={27}
                 color={focused ? "#EE2A7B" : "#707070"}
               />
             );
@@ -78,6 +93,7 @@ const AppNavigatorScreen = () => {
           name="HairStyleBank"
           component={HairStyleBankStackScreen}
         />
+        <AppNavigator.Screen name="UserInfo" component={UserInfoStackScreen} />
       </AppNavigator.Navigator>
     </NavigationContainer>
   );

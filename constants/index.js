@@ -9,7 +9,9 @@ export const STATUS_MESSAGE = {
   ERROR: "error",
 };
 
-export const URL_SERVER = "http://157.230.43.147/";
+export const URL_SERVER = "http://157.230.43.147";
+
+export const ACCESS_TOKEN = "ACCESS_TOKEN";
 
 export const headerNavigationStyle = {
   headerStyle: {

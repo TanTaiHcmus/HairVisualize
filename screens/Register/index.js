@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { View, Alert } from "react-native";
-import UserApi from "../../Api/userApi";
 import Button from "../../components/Button";
 import Container from "../../components/Container";
 import DismissKeyboardView from "../../components/DismissKeyboardView";
@@ -13,9 +12,11 @@ import {
   DisplayNameIsEmpty,
   EmailIsEmpty,
   PasswordIsEmpty,
+  STATUS_MESSAGE,
   UsernameIsEmpty,
 } from "../../constants";
 import { isEmpty } from "../../utils";
+import { handleRegisterConnect } from "./action";
 import { Styles } from "./style";
 
 const RegisterScreen = ({ navigation }) => {
@@ -26,7 +27,7 @@ const RegisterScreen = ({ navigation }) => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isEnabled, setIsEnabled] = useState(false);
 
-  const handleRegister = () => {
+  const handleRegister = async () => {
     if (isEmpty(username)) {
       Alert.alert(UsernameIsEmpty);
       return;
@@ -52,14 +53,19 @@ const RegisterScreen = ({ navigation }) => {
       return;
     }
 
-    UserApi.register({
+    const response = await handleRegisterConnect({
       account: username,
-      email: email,
+      email,
+      password,
       display_name: displayName,
-      password: password,
-    }).then((response) => {
-      console.log(response);
     });
+
+    if (response.message === STATUS_MESSAGE.SUCCESS) {
+      Alert.alert("Register successfully!");
+      navigation.goBack();
+    } else {
+      Alert.alert(response.data.message);
+    }
   };
 
   return (
