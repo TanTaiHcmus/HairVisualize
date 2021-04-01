@@ -24,3 +24,11 @@ export const setTokenFromStorage = async (value) => {
     return false;
   }
 };
+
+export const getFileFromUri = (uri) => {
+  return {
+    uri,
+    type: "image/jpeg",
+    name: "photo.jpg",
+  };
+};

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { View, Alert } from "react-native";
+import { Alert, View } from "react-native";
+import UserApi from "../../Api/userApi";
 import Button from "../../components/Button";
 import Container from "../../components/Container";
 import DismissKeyboardView from "../../components/DismissKeyboardView";
@@ -16,7 +17,6 @@ import {
   UsernameIsEmpty,
 } from "../../constants";
 import { isEmpty } from "../../utils";
-import { handleRegisterConnect } from "./action";
 import { Styles } from "./style";
 
 const RegisterScreen = ({ navigation }) => {
@@ -53,7 +53,7 @@ const RegisterScreen = ({ navigation }) => {
       return;
     }
 
-    const response = await handleRegisterConnect({
+    const response = await UserApi.register({
       account: username,
       email,
       password,

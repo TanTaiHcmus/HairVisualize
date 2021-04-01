@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { Image, TouchableOpacity, Modal, View } from "react-native";
+import UserApi from "../../Api/userApi";
 import Styles from "./style";
 
-const ImageDisplay = ({ image }) => {
+const ImageDisplay = ({ image, style }) => {
   const [isShowModal, setIsShowModal] = useState(false);
 
   const handleImagePress = () => {
@@ -13,7 +14,7 @@ const ImageDisplay = ({ image }) => {
     <View>
       <TouchableOpacity onPress={handleImagePress}>
         <Image
-          style={Styles.image}
+          style={[Styles.image, style]}
           source={{ uri: image }}
           resizeMode="stretch"
         />

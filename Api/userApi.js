@@ -12,12 +12,16 @@ class UserApi {
     return Axios.post("/api/v1/auth/access-token", account);
   };
 
-  static forgetPassword = () => {
-    return Axios.put(`/users/${id}`, info);
+  static getAvatar = (id) => {
+    return Axios.get(`/api/v1/static/${id}`);
   };
 
-  static getAvatar = (id) => {
-    return Axios.get("/api/v1/static/", { user_id: 2 });
+  static getUserId = () => {
+    return Axios.get("/api/v1/auth");
+  };
+
+  static updateInfo = (id, info) => {
+    return Axios.patch(`/api/v1/users/${id}`, info);
   };
 }
 

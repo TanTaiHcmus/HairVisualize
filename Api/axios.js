@@ -59,6 +59,15 @@ class Request {
       params,
     });
   };
+
+  static patch = (url, params) => {
+    const data = convertObjectToFormData(params);
+    return Axios({
+      method: "patch",
+      url,
+      data: data || undefined,
+    });
+  };
 }
 
 export default Request;

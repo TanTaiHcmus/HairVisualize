@@ -1,18 +1,18 @@
 // import CheckBox from "@react-native-community/checkbox";
-import React, { useState, useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Alert, View } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
+import UserApi from "../../Api/userApi";
+import Button from "../../components/Button";
 import Container from "../../components/Container";
 import DismissKeyboardView from "../../components/DismissKeyboardView";
 import KeyboardView from "../../components/KeyboardView";
 import TextCustom from "../../components/TextCustom";
 import TextInputWithIcon from "../../components/TextInputWithIcon";
-import AppContext from "../../context";
-import { Styles } from "./style";
-import Button from "../../components/Button";
-import { handleLoginConnect } from "./action";
 import { STATUS_MESSAGE } from "../../constants";
+import AppContext from "../../context";
 import { setTokenFromStorage } from "../../utils";
+import { Styles } from "./style";
 
 const LoginScreen = ({ navigation }) => {
   const context = useContext(AppContext);
@@ -22,7 +22,7 @@ const LoginScreen = ({ navigation }) => {
   const [isCheck, setIsCheck] = useState(false);
 
   const handleLogin = async () => {
-    const response = await handleLoginConnect({ username, password });
+    const response = await UserApi.login({ username, password });
 
     if (response.message === STATUS_MESSAGE.SUCCESS) {
       await setTokenFromStorage(response.data.access_token);
