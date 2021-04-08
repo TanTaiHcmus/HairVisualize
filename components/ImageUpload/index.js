@@ -1,72 +1,25 @@
-import React, { useState } from "react";
-import { Image, View, Platform, Alert } from "react-native";
-import * as ImagePicker from "expo-image-picker";
+import React from "react";
+import { View } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome5";
+import { openCamera } from "../../utils/camera";
+import { openGallery } from "../../utils/gallery";
 import ButtonGradient from "../ButtonGradient";
+import ImageDisplay from "../ImageDisplay";
 import TextCustom from "../TextCustom";
 import { Styles } from "./style";
-import ImageDisplay from "../ImageDisplay";
 
 const ImageUpload = ({ image, onChange }) => {
-  const requestLibraryPermission = async () => {
-    if (Platform.OS !== "web") {
-      const {
-        status,
-      } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-
-      if (status !== "granted") {
-        Alert.alert(
-          "Sorry, we need media library permissions to make this work!"
-        );
-        return false;
-      }
-      return true;
+  const handleOpenCamera = async () => {
+    const result = await openCamera([4, 3]);
+    if (result) {
+      onChange(result);
     }
   };
 
   const handleOpenGallery = async () => {
-    const hasPermission = await requestLibraryPermission();
-
-    if (hasPermission) {
-      let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.All,
-        allowsEditing: true,
-        aspect: [4, 3],
-        quality: 1,
-      });
-
-      if (!result.cancelled) {
-        onChange(result.uri);
-      }
-    }
-  };
-
-  const requestCameraPermission = async () => {
-    if (Platform.OS !== "web") {
-      const { status } = await ImagePicker.requestCameraPermissionsAsync();
-
-      if (status !== "granted") {
-        Alert.alert("Sorry, we need camera permissions to make this work!");
-        return false;
-      }
-      return true;
-    }
-  };
-
-  const handleOpenCamera = async () => {
-    const hasPermission = await requestCameraPermission();
-
-    if (hasPermission) {
-      let result = await ImagePicker.launchCameraAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.All,
-        allowsEditing: true,
-        aspect: [4, 3],
-        quality: 1,
-      });
-
-      if (!result.cancelled) {
-        onChange(result.uri);
-      }
+    const result = await openGallery([4, 3]);
+    if (result) {
+      onChange(result);
     }
   };
 
@@ -74,7 +27,7 @@ const ImageUpload = ({ image, onChange }) => {
     <View style={Styles.container}>
       <View style={Styles.imageContainer}>
         {image ? (
-          <ImageDisplay image={image} />
+          <ImageDisplay image={image} style={Styles.image} />
         ) : (
           <View style={Styles.noImage}>
             <Icon name="cloud-upload-alt" size={70} color="#EE2A7B" />

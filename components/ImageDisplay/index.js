@@ -1,21 +1,25 @@
 import React, { useState } from "react";
-import { Image, TouchableOpacity, Modal, View } from "react-native";
-import UserApi from "../../Api/userApi";
+import { Image, Modal, TouchableOpacity, View } from "react-native";
+import { isEmpty } from "../../utils";
 import Styles from "./style";
 
 const ImageDisplay = ({ image, style }) => {
   const [isShowModal, setIsShowModal] = useState(false);
 
-  const handleImagePress = () => {
+  const handleImagePress = async () => {
     setIsShowModal(true);
   };
+
+  const uriImage = !isEmpty(image) ? image : "../../images/download.png";
 
   return (
     <View>
       <TouchableOpacity onPress={handleImagePress}>
         <Image
           style={[Styles.image, style]}
-          source={{ uri: image }}
+          source={{
+            uri: uriImage,
+          }}
           resizeMode="stretch"
         />
       </TouchableOpacity>
@@ -38,8 +42,10 @@ const ImageDisplay = ({ image, style }) => {
           />
           <TouchableOpacity activeOpacity={1} style={Styles.imageShowContainer}>
             <Image
-              style={Styles.image}
-              source={{ uri: image }}
+              style={[Styles.image, style]}
+              source={{
+                uri: uriImage,
+              }}
               resizeMode="stretch"
             />
           </TouchableOpacity>

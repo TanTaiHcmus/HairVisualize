@@ -14,6 +14,9 @@ export const Styles = StyleSheet.create({
     marginBottom: 50,
     overflow: "hidden",
   },
+  image: {
+    aspectRatio: 4 / 3,
+  },
   noImage: {
     width: "100%",
     height: "100%",

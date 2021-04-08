@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { ACCESS_TOKEN } from "../constants";
+import { ACCESS_TOKEN, URL_SERVER } from "../constants";
+import { SET_IS_LOGIN } from "../redux/actions/Login";
 
 export const isEmpty = (text) => {
   return text === null || text === undefined || text === "";
@@ -31,4 +32,20 @@ export const getFileFromUri = (uri) => {
     type: "image/jpeg",
     name: "photo.jpg",
   };
+};
+
+export const handleLogout = async (dispatch) => {
+  try {
+    await AsyncStorage.clear();
+    dispatch({
+      type: SET_IS_LOGIN,
+      data: false,
+    });
+  } catch {
+    console.log("Storage error");
+  }
+};
+
+export const addPrefixUrl = (url) => {
+  return !isEmpty(url) ? `${URL_SERVER}${url}` : "";
 };

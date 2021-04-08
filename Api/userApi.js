@@ -1,27 +1,23 @@
 import Axios from "./axios";
 class UserApi {
-  static verifyToken = () => {
-    return Axios.post("/api/v1/auth/verify");
+  static getUserInfo = () => {
+    return Axios.get("/auth/verify");
   };
 
   static register = (info) => {
-    return Axios.post("/api/v1/auth/register", info);
+    return Axios.post("/auth/register", info);
   };
 
   static login = (account) => {
-    return Axios.post("/api/v1/auth/access-token", account);
-  };
-
-  static getAvatar = (id) => {
-    return Axios.get(`/api/v1/static/${id}`);
+    return Axios.post("/auth/access-token", account);
   };
 
   static getUserId = () => {
-    return Axios.get("/api/v1/auth");
+    return Axios.get("/auth/");
   };
 
-  static updateInfo = (id, info) => {
-    return Axios.patch(`/api/v1/users/${id}`, info);
+  static updateInfo = (info) => {
+    return Axios.patch("/users/", info);
   };
 }
 

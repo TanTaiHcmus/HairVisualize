@@ -1,63 +1,17 @@
-import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import React from "react";
-import HomeScreen from "../../screens/Home/index";
-import { headerNavigationStyle } from "../../constants";
-import LoadYourHair from "../../screens/LoadYourHair";
-import VisualizeScreen from "../../screens/Visualize";
-import HairStyleBankScreen from "../../screens/HairStyleBank";
-import UserInfoScreen from "../../screens/UserInfo";
+import HomeStackScreen from "../../screens/HomeStack";
+import UserInfoStackScreen from "../../screens/UserInfoStack";
+import HairStyleBankStackScreen from "../../screens/HairStyleBankStack";
 
-const HomeStack = createStackNavigator();
+const MainNavigator = createBottomTabNavigator();
 
-const HomeStackScreen = () => {
-  return (
-    <HomeStack.Navigator
-      screenOptions={headerNavigationStyle}
-      initialRouteName="Home"
-    >
-      <HomeStack.Screen name="Home" component={HomeScreen} />
-      <HomeStack.Screen
-        name="LoadYourHair"
-        component={LoadYourHair}
-        options={({ route }) => ({ title: route.params.name })}
-      />
-      <HomeStack.Screen name="Visualize" component={VisualizeScreen} />
-    </HomeStack.Navigator>
-  );
-};
-
-const HairStyleBankStack = createStackNavigator();
-
-const HairStyleBankStackScreen = () => {
-  return (
-    <HairStyleBankStack.Navigator screenOptions={headerNavigationStyle}>
-      <HairStyleBankStack.Screen
-        name="HairStyleBank"
-        component={HairStyleBankScreen}
-      />
-    </HairStyleBankStack.Navigator>
-  );
-};
-
-const UserInfoStack = createStackNavigator();
-
-const UserInfoStackScreen = () => {
-  return (
-    <UserInfoStack.Navigator screenOptions={headerNavigationStyle}>
-      <UserInfoStack.Screen name="UserInformation" component={UserInfoScreen} />
-    </UserInfoStack.Navigator>
-  );
-};
-
-const AppNavigator = createBottomTabNavigator();
-
-const AppNavigatorScreen = () => {
+const MainNavigatorScreen = () => {
   return (
     <NavigationContainer>
-      <AppNavigator.Navigator
+      <MainNavigator.Navigator
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused }) => {
             let iconName;
@@ -88,15 +42,15 @@ const AppNavigatorScreen = () => {
           },
         })}
       >
-        <AppNavigator.Screen name="Home" component={HomeStackScreen} />
-        <AppNavigator.Screen
+        <MainNavigator.Screen name="Home" component={HomeStackScreen} />
+        <MainNavigator.Screen
           name="HairStyleBank"
           component={HairStyleBankStackScreen}
         />
-        <AppNavigator.Screen name="UserInfo" component={UserInfoStackScreen} />
-      </AppNavigator.Navigator>
+        <MainNavigator.Screen name="UserInfo" component={UserInfoStackScreen} />
+      </MainNavigator.Navigator>
     </NavigationContainer>
   );
 };
 
-export default AppNavigatorScreen;
+export default MainNavigatorScreen;

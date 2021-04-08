@@ -9,7 +9,7 @@ export const STATUS_MESSAGE = {
   ERROR: "error",
 };
 
-export const URL_SERVER = "http://157.230.43.147";
+export const URL_SERVER = "http://157.230.43.147/api/v1";
 
 export const ACCESS_TOKEN = "ACCESS_TOKEN";
 
@@ -30,3 +30,4 @@ export const EmailIsEmpty = "Email is empty!";
 export const PasswordIsEmpty = "Password is empty!";
 export const ConfirmPasswordIsEmpty = "Confirm password is empty!";
 export const ConfirmPasswordIsNotMatch = "Confirm password is not match!";
+export const INVALID_TOKEN_STATUS = 401;

@@ -1,30 +1,13 @@
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import * as React from "react";
-import LoginScreen from "../../screens/Login";
-import RegisterScreen from "../../screens/Register";
-import OTPConfirm from "../../screens/OTPConfirm";
-import { headerNavigationStyle } from "../../constants";
+import React from "react";
+import LoginStackScreen from "../../screens/LoginStack";
 
-export default function LoginNavigator() {
+const LoginNavigator = () => {
   return (
     <NavigationContainer>
-      <RootNavigator />
+      <LoginStackScreen />
     </NavigationContainer>
   );
-}
+};
 
-const Stack = createStackNavigator();
-
-function RootNavigator() {
-  return (
-    <Stack.Navigator
-      screenOptions={headerNavigationStyle}
-      initialRouteName="Login"
-    >
-      <Stack.Screen name="Login" component={LoginScreen} />
-      <Stack.Screen name="Register" component={RegisterScreen} />
-      <Stack.Screen name="OTPConfirm" component={OTPConfirm} />
-    </Stack.Navigator>
-  );
-}
+export default LoginNavigator;

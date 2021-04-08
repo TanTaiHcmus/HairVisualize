@@ -18,7 +18,7 @@ Axios.interceptors.request.use(async (config) => {
 
 Axios.interceptors.response.use(
   (response) => {
-    if (response && response.data) {
+    if (response) {
       return {
         data: response.data,
         message: STATUS_MESSAGE.SUCCESS,
@@ -29,7 +29,7 @@ Axios.interceptors.response.use(
   (error) => {
     return {
       message: STATUS_MESSAGE.ERROR,
-      data: error.response.data,
+      data: error.response,
     };
   }
 );
@@ -48,7 +48,7 @@ class Request {
     return Axios({
       method: "post",
       url,
-      data: data || undefined,
+      data: data,
     });
   };
 
@@ -62,10 +62,11 @@ class Request {
 
   static patch = (url, params) => {
     const data = convertObjectToFormData(params);
+
     return Axios({
       method: "patch",
       url,
-      data: data || undefined,
+      data: data,
     });
   };
 }
