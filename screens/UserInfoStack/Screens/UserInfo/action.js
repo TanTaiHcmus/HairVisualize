@@ -1,7 +1,7 @@
 import UserApi from "../../../../Api/userApi";
 import { INVALID_TOKEN_STATUS, STATUS_MESSAGE } from "../../../../constants";
 import { UPDATE_USER_INFO } from "../../../../redux/actions/User";
-import { addPrefixUrl, handleLogout } from "../../../../utils";
+import { addPrefixUrl, handleLogout, isEmpty } from "../../../../utils";
 
 export const getUserInfoFromServer = () => async (dispatch) => {
   const response = await UserApi.getUserInfo();
@@ -20,7 +20,7 @@ export const getUserInfoFromServer = () => async (dispatch) => {
       data: {
         account,
         displayName,
-        avatar: `${addPrefixUrl(avatar)}?${updated_at}`,
+        avatar: !isEmpty(avatar) ? `${addPrefixUrl(avatar)}?${updated_at}` : "",
         email,
       },
     });

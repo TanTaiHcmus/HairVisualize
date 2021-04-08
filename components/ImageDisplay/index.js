@@ -10,7 +10,11 @@ const ImageDisplay = ({ image, style }) => {
     setIsShowModal(true);
   };
 
-  const uriImage = !isEmpty(image) ? image : "../../images/download.png";
+  const uriImage = !isEmpty(image)
+    ? image
+    : "https://raw.githubusercontent.com/TanTaiHcmus/HairVisualize/master/Images/image.png";
+
+  console.log(uriImage);
 
   return (
     <View>
