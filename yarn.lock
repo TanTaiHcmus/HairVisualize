@@ -1638,11 +1638,6 @@
   dependencies:
     deep-assign "^3.0.0"
 
-"@react-native-community/checkbox@^0.5.7":
-  version "0.5.7"
-  resolved "https://registry.yarnpkg.com/@react-native-community/checkbox/-/checkbox-0.5.7.tgz#ac818de88736acc1a4539188f2d435cf5e845ae1"
-  integrity sha512-CiHBAMWy5fsFIHLd1pf8frlWrLT8DnCXUSxdlGKazHm7srQSReKH4R5absShjmYOHRo9raWEnKZO/cm7MUDHZg==
-
 "@react-native-community/cli-debugger-ui@^4.13.1":
   version "4.13.1"
   resolved "https://registry.yarnpkg.com/@react-native-community/cli-debugger-ui/-/cli-debugger-ui-4.13.1.tgz#07de6d4dab80ec49231de1f1fbf658b4ad39b32c"
@@ -3146,6 +3141,11 @@ expo-asset@~8.2.1:
     md5-file "^3.2.3"
     path-browserify "^1.0.0"
     url-parse "^1.4.4"
+
+expo-checkbox@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/expo-checkbox/-/expo-checkbox-1.0.2.tgz#63395a56d85cded3f1272525b5ba653ca5707929"
+  integrity sha512-ATIcfjHCOHI4PPVRCFxsobOtmefAD/rwZp6Vpw2GKE2SVOhwsBiCe1brxdU5fVaeAW8gxkzYRsDcoc+DCZRPSw==
 
 expo-constants@~9.3.3:
   version "9.3.5"

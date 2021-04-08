@@ -20,6 +20,9 @@ const UserInfoScreen = ({
     getUserInfoConnect();
   }, []);
 
+  const defaultImage =
+    "https://raw.githubusercontent.com/TanTaiHcmus/HairVisualize/master/Images/avatar.png";
+
   return (
     <View style={Styles.container}>
       <NavbarItem
@@ -28,7 +31,11 @@ const UserInfoScreen = ({
         }}
       >
         <View style={Styles.avatarContainer}>
-          <ImageDisplay image={avatar} style={Styles.avatar} />
+          <ImageDisplay
+            image={avatar}
+            defaultImage={defaultImage}
+            style={Styles.avatar}
+          />
         </View>
 
         <View style={Styles.infoDetail}>

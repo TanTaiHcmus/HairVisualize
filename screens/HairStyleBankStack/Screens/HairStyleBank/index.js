@@ -9,8 +9,7 @@ const HairStyleBankScreen = ({ navigation }) => {
   useEffect(() => {
     const a = new Array(20).fill().map((item, index) => ({
       id: index,
-      image:
-        "https://raw.githubusercontent.com/TanTaiHcmus/Sea-Diamond---Hotel-Website-version-1---no-Database/master/images/about-images/about-main.jpg",
+      image: "",
     }));
 
     setImages(a);

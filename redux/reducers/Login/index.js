@@ -1,7 +1,8 @@
-import { SET_IS_LOGIN } from "../../actions/Login";
+import { SET_ACCESS_TOKEN, SET_IS_LOGIN } from "../../actions/Login";
 
 const initialState = {
   isLogin: null,
+  token: "",
 };
 
 const LoginReducer = (state = initialState, action) => {
@@ -10,6 +11,12 @@ const LoginReducer = (state = initialState, action) => {
       return {
         ...state,
         isLogin: action.data,
+      };
+    }
+    case SET_ACCESS_TOKEN: {
+      return {
+        ...state,
+        token: action.data,
       };
     }
     default: {

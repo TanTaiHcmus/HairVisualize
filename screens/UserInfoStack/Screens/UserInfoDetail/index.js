@@ -33,13 +33,20 @@ const UserInfoDetailScreen = ({
     }
   };
 
+  const defaultImage =
+    "https://raw.githubusercontent.com/TanTaiHcmus/HairVisualize/master/Images/avatar.png";
+
   return (
     <View style={Styles.container}>
       <ScrollView>
         <View style={Styles.infoHeader}>
           <View style={Styles.avatarControl}>
             <View style={Styles.avatarContainer}>
-              <ImageDisplay image={avatar} style={Styles.avatar} />
+              <ImageDisplay
+                image={avatar}
+                defaultImage={defaultImage}
+                style={Styles.avatar}
+              />
             </View>
             <Icon
               name="edit"

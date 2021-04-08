@@ -1,4 +1,4 @@
-// import CheckBox from "@react-native-community/checkbox";
+import CheckBox from "expo-checkbox";
 import React, { useState } from "react";
 import { Alert, View } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
@@ -10,6 +10,7 @@ import KeyboardView from "../../../../components/KeyboardView";
 import TextCustom from "../../../../components/TextCustom";
 import TextInputWithIcon from "../../../../components/TextInputWithIcon";
 import { STATUS_MESSAGE } from "../../../../constants";
+import { isEmpty } from "../../../../utils";
 import { loginToServer } from "./action";
 import { Styles } from "./style";
 
@@ -19,7 +20,17 @@ const LoginScreen = ({ navigation, handleLoginConnect }) => {
   const [isCheck, setIsCheck] = useState(false);
 
   const handleLoginClicked = async () => {
-    const response = await handleLoginConnect({ username, password });
+    if (isEmpty(username)) {
+      Alert.alert("Username is empty!");
+      return;
+    }
+
+    if (isEmpty(password)) {
+      Alert.alert("Password is empty!");
+      return;
+    }
+
+    const response = await handleLoginConnect({ username, password, isCheckO });
 
     if (response.message === STATUS_MESSAGE.ERROR) {
       Alert.alert(response.data.data.message);
@@ -55,12 +66,12 @@ const LoginScreen = ({ navigation, handleLoginConnect }) => {
 
           <View style={Styles.helpContainer}>
             <View style={Styles.checkboxContainer}>
-              {/* <CheckBox
+              <CheckBox
                 value={isCheck}
-                onValueChange={(isCheck) => setIsCheck(isCheck)}
-                tintColors={{ true: "#EE2A7B", false: "#707070" }}
+                onValueChange={setIsCheck}
+                color={isCheck ? "#EE2A7B" : undefined}
                 style={Styles.checkbox}
-              /> */}
+              />
               <TextCustom title="Remember" />
             </View>
             <TextCustom

@@ -1,7 +1,8 @@
 import axios from "axios";
 import FormData from "form-data";
 import { STATUS_MESSAGE, URL_SERVER } from "../constants";
-import { getTokenFromStorage } from "../utils";
+import store from "../redux/store";
+import { isEmpty } from "../utils";
 
 const Axios = axios.create({
   baseURL: URL_SERVER,
@@ -10,9 +11,11 @@ const Axios = axios.create({
   },
 });
 
-Axios.interceptors.request.use(async (config) => {
-  const token = await getTokenFromStorage();
-  config.headers["Authorization"] = token ? "bearer " + token : undefined;
+Axios.interceptors.request.use((config) => {
+  const { token } = store.getState().login;
+  config.headers["Authorization"] = !isEmpty(token)
+    ? "bearer " + token
+    : undefined;
   return config;
 });
 

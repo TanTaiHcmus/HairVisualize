@@ -3,18 +3,16 @@ import { Image, Modal, TouchableOpacity, View } from "react-native";
 import { isEmpty } from "../../utils";
 import Styles from "./style";
 
-const ImageDisplay = ({ image, style }) => {
+const ImageDisplay = ({
+  image,
+  defaultImage = "https://raw.githubusercontent.com/TanTaiHcmus/HairVisualize/master/Images/image.png",
+  style,
+}) => {
   const [isShowModal, setIsShowModal] = useState(false);
 
   const handleImagePress = async () => {
     setIsShowModal(true);
   };
-
-  const uriImage = !isEmpty(image)
-    ? image
-    : "https://raw.githubusercontent.com/TanTaiHcmus/HairVisualize/master/Images/image.png";
-
-  console.log(uriImage);
 
   return (
     <View>
@@ -22,7 +20,7 @@ const ImageDisplay = ({ image, style }) => {
         <Image
           style={[Styles.image, style]}
           source={{
-            uri: uriImage,
+            uri: isEmpty(image) ? defaultImage : image,
           }}
           resizeMode="stretch"
         />
@@ -48,7 +46,7 @@ const ImageDisplay = ({ image, style }) => {
             <Image
               style={[Styles.image, style]}
               source={{
-                uri: uriImage,
+                uri: isEmpty(image) ? defaultImage : image,
               }}
               resizeMode="stretch"
             />

@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ACCESS_TOKEN, URL_SERVER } from "../constants";
-import { SET_IS_LOGIN } from "../redux/actions/Login";
+import { SET_ACCESS_TOKEN, SET_IS_LOGIN } from "../redux/actions/Login";
 
 export const isEmpty = (text) => {
   return text === null || text === undefined || text === "";
@@ -40,6 +40,10 @@ export const handleLogout = async (dispatch) => {
     dispatch({
       type: SET_IS_LOGIN,
       data: false,
+    });
+    dispatch({
+      type: SET_ACCESS_TOKEN,
+      data: "",
     });
   } catch {
     console.log("Storage error");

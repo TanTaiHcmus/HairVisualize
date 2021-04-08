@@ -15,7 +15,7 @@ export const Styles = StyleSheet.create({
     alignItems: "center",
   },
   checkbox: {
-    marginRight: 2,
+    marginRight: 8,
   },
   bold: {
     fontWeight: "bold",
