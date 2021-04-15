@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { TextInput, View } from "react-native";
-import Icon from "react-native-vector-icons/FontAwesome";
+import Icon from "react-native-vector-icons/FontAwesome5";
 import Styles from "./style";
 
 const TextInputWithIcon = ({
@@ -15,7 +15,7 @@ const TextInputWithIcon = ({
 
   return (
     <View style={[Styles.container, style, isInvalid ? Styles.invalid : null]}>
-      <Icon name={iconName} style={Styles.icon} size={iconSize} />
+      <Icon name={iconName} style={Styles.icon} size={iconSize} solid />
       <TextInput
         style={Styles.inputText}
         secureTextEntry={isShowPassword || !isPassword ? false : true}

@@ -24,5 +24,6 @@ export default StyleSheet.create({
   },
   icon: {
     width: 25,
+    textAlign: "center",
   },
 });

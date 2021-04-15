@@ -1,24 +1,13 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { getTokenFromStorage } from "../../utils";
 import WhiteScreen from "../WhiteScreen";
-import { setIsLogin } from "./action";
+import { handleValidToken } from "./action";
 import MainNavigator from "../../navigation/MainNavigator";
 import LoginNavigator from "../../navigation/LoginNavigator";
 
-const AppScreen = ({ isLogin, setIsLoginConnect }) => {
-  const getToken = async () => {
-    const token = await getTokenFromStorage();
-
-    if (token) {
-      setIsLoginConnect(true);
-    } else {
-      setIsLoginConnect(false);
-    }
-  };
-
+const AppScreen = ({ isLogin, handleValidTokenConnect }) => {
   useEffect(() => {
-    getToken();
+    handleValidTokenConnect();
   }, []);
 
   return isLogin === null ? (
@@ -37,7 +26,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-  setIsLoginConnect: setIsLogin,
+  handleValidTokenConnect: handleValidToken,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AppScreen);

@@ -17,6 +17,7 @@ export const getTokenFromStorage = async () => {
 };
 
 export const setTokenFromStorage = async (value) => {
+  console.log(value);
   try {
     await AsyncStorage.setItem(ACCESS_TOKEN, value);
     return true;
