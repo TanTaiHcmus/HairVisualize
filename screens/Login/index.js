@@ -1,23 +1,27 @@
-import CheckBox from "expo-checkbox";
+import { LinearGradient } from "expo-linear-gradient";
 import React, { useState } from "react";
-import { Alert, View } from "react-native";
-import Icon from "react-native-vector-icons/FontAwesome";
+import { Alert, ScrollView, View } from "react-native";
+import Icon from "react-native-vector-icons/Ionicons";
 import { connect } from "react-redux";
-import Button from "../../components/Button";
-import Container from "../../components/Container";
+import ButtonGradient from "../../components/ButtonGradient";
 import DismissKeyboardView from "../../components/DismissKeyboardView";
 import KeyboardView from "../../components/KeyboardView";
 import TextCustom from "../../components/TextCustom";
 import TextInputWithIcon from "../../components/TextInputWithIcon";
-import { STATUS_MESSAGE } from "../../constants";
+import {
+  AppName,
+  gradientBackground,
+  Screens,
+  STATUS_MESSAGE,
+} from "../../constants";
+import withTranslate from "../../HOC/withTranslate";
 import { isEmpty } from "../../utils";
 import { loginToServer } from "./action";
 import Styles from "./style";
 
-const LoginScreen = ({ navigation, handleLoginConnect }) => {
+const LoginScreen = ({ translate, navigation, handleLoginConnect }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [isCheck, setIsCheck] = useState(false);
 
   const handleLoginClicked = async () => {
     if (isEmpty(username)) {
@@ -30,7 +34,7 @@ const LoginScreen = ({ navigation, handleLoginConnect }) => {
       return;
     }
 
-    const response = await handleLoginConnect({ username, password, isCheck });
+    const response = await handleLoginConnect({ username, password });
 
     if (response.message === STATUS_MESSAGE.ERROR) {
       Alert.alert(response.data.data.message);
@@ -41,82 +45,73 @@ const LoginScreen = ({ navigation, handleLoginConnect }) => {
     // const response = await
   };
 
+  const handleCreateNewAccount = () => {
+    navigation.navigate(Screens.Register);
+  };
+
   return (
-    <KeyboardView>
-      <DismissKeyboardView>
-        <Container>
-          <TextInputWithIcon
-            iconName="user"
-            iconSize={24}
-            onChangeText={(text) => setUsername(text)}
-            value={username}
-            placeholder="Username"
-            editable
-          />
+    <LinearGradient style={Styles.container} colors={gradientBackground}>
+      <ScrollView keyboardShouldPersistTaps="handled">
+        <View>
+          <KeyboardView>
+            <DismissKeyboardView>
+              <View style={Styles.logoContainer}>
+                <Icon name="logo-instagram" style={Styles.logo} size={100} />
+                <TextCustom title={AppName} style={Styles.logoName} />
+              </View>
 
-          <TextInputWithIcon
-            iconName="lock"
-            iconSize={25}
-            onChangeText={(text) => setPassword(text)}
-            value={password}
-            placeholder="Password"
-            isPassword
-            editable
-          />
+              <View style={Styles.inputContainer}>
+                <TextInputWithIcon
+                  iconName="person"
+                  iconSize={24}
+                  onChangeText={(text) => setUsername(text)}
+                  value={username}
+                  placeholder={translate("username")}
+                  style={Styles.input}
+                  editable
+                />
 
-          <View style={Styles.helpContainer}>
-            <View style={Styles.checkboxContainer}>
-              <CheckBox
-                value={isCheck}
-                onValueChange={() => {
-                  setIsCheck(!isCheck);
-                }}
-                color={isCheck ? "#EE2A7B" : undefined}
-                style={Styles.checkbox}
-              />
-              <TextCustom title="Remember" />
-            </View>
-            <TextCustom
-              title="Forget password?"
-              onPress={handleForgetPassword}
-            />
-          </View>
+                <TextInputWithIcon
+                  iconName="lock-open"
+                  iconSize={25}
+                  onChangeText={(text) => setPassword(text)}
+                  value={password}
+                  placeholder={translate("password")}
+                  style={Styles.input}
+                  isPassword
+                  editable
+                />
+              </View>
 
-          <Button onPress={handleLoginClicked}>
-            <TextCustom
-              title="Log in"
-              style={[Styles.buttonText, Styles.bold]}
-            />
-          </Button>
+              <View style={Styles.controlContainer}>
+                <ButtonGradient
+                  onPress={handleLoginClicked}
+                  linearGradientColors={gradientBackground}
+                  style={Styles.loginButton}
+                >
+                  <TextCustom
+                    title={translate("login")}
+                    style={Styles.loginText}
+                  />
+                </ButtonGradient>
 
-          <TextCustom
-            title="Or"
-            style={[Styles.bold, { marginBottom: 30, fontSize: 18 }]}
-          />
+                <TextCustom
+                  onPress={handleForgetPassword}
+                  title={translate("forgot_password")}
+                  style={Styles.forgetPassword}
+                />
 
-          <View style={Styles.socialLoginContainer}>
-            <View style={Styles.socialLogin}>
-              <Icon name="facebook" size={30} color="#3b5ba6" />
-            </View>
-
-            <View style={Styles.socialLogin}>
-              <Icon name="google" size={30} color="#dc4a38" />
-            </View>
-          </View>
-
-          <View style={Styles.loginQuestion}>
-            <TextCustom title="Did you have an account?" />
-            <TextCustom
-              style={Styles.loginText}
-              onPress={() => {
-                navigation.navigate("Register");
-              }}
-              title="Register"
-            />
-          </View>
-        </Container>
-      </DismissKeyboardView>
-    </KeyboardView>
+                <TextCustom
+                  onPress={handleCreateNewAccount}
+                  title={translate("create_account")}
+                  style={Styles.createAccount}
+                />
+              </View>
+            </DismissKeyboardView>
+          </KeyboardView>
+        </View>
+      </ScrollView>
+    </LinearGradient>
   );
 };
 
@@ -124,4 +119,4 @@ const mapDispatchToProps = {
   handleLoginConnect: loginToServer,
 };
 
-export default connect(null, mapDispatchToProps)(LoginScreen);
+export default connect(null, mapDispatchToProps)(withTranslate(LoginScreen));

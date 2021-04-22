@@ -17,17 +17,17 @@ export default StyleSheet.create({
     flex: 1,
     paddingHorizontal: 20,
     justifyContent: "space-between",
-    height: 60,
+    height: 55,
   },
   accountName: {
     fontSize: 20,
   },
   displayName: {
     fontSize: 16,
-    color: "#707070",
+    color: "#0d0d0d",
   },
   icon: {
-    color: "#707070",
+    color: "#0d0d0d",
     width: 30,
     textAlign: "center",
   },

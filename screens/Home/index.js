@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, Image } from "react-native";
-import Icon from "react-native-vector-icons/FontAwesome5";
+import Icon from "react-native-vector-icons/Ionicons";
 import ButtonGradient from "../../components/ButtonGradient";
 import Container from "../../components/Container";
 import TextCustom from "../../components/TextCustom";
@@ -16,15 +16,18 @@ const HomeScreen = ({ navigation }) => {
       <Image style={Styles.imageBanner} />
       <Container>
         <ButtonGradient
-          linearGradientColors={["#ef538b", "#ff9707"]}
+          linearGradientColors={["#0d518c", "#f285c1"]}
           style={Styles.buttonGradient}
+          onPress={() => {
+            navigation.navigate("HairStyleBank");
+          }}
         >
           <Icon name="landmark" size={22} style={Styles.icon} />
           <TextCustom title="HairStyle Bank" style={Styles.buttonText} />
         </ButtonGradient>
 
         <ButtonGradient
-          linearGradientColors={["#088de9", "#1ecff4"]}
+          linearGradientColors={["#9ac7d9", "#0d518c"]}
           style={Styles.buttonGradient}
         >
           <Icon name="store" size={22} style={Styles.icon} />

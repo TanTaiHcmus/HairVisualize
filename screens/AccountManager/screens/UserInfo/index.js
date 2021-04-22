@@ -1,10 +1,15 @@
 import React from "react";
 import { Alert, ScrollView, View } from "react-native";
-import Icon from "react-native-vector-icons/FontAwesome5";
+import Icon from "react-native-vector-icons/Ionicons";
 import { connect } from "react-redux";
 import ImageDisplay from "../../../../components/ImageDisplay";
 import TextCustom from "../../../../components/TextCustom";
-import { STATUS_MESSAGE } from "../../../../constants";
+import {
+  EditUserInfoOptions,
+  Screens,
+  STATUS_MESSAGE,
+} from "../../../../constants";
+import withTranslate from "../../../../HOC/withTranslate";
 import { getFileFromUri } from "../../../../utils";
 import { openGallery } from "../../../../utils/gallery";
 import { updateUserInfoToServer } from "../../action";
@@ -12,7 +17,8 @@ import InfoFrame from "./InfoFrame";
 import InfoLine from "./InfoLine";
 import Styles from "./style";
 
-const UserInfoDetailScreen = ({
+const UserInfoScreen = ({
+  translate,
   navigation,
   handleUpdateUserInfoConnect,
   account,
@@ -48,12 +54,6 @@ const UserInfoDetailScreen = ({
                 style={Styles.avatar}
               />
             </View>
-            <Icon
-              name="edit"
-              size={20}
-              style={Styles.buttonChangeAvatar}
-              onPress={handleChangeAvatar}
-            />
           </View>
 
           <TextCustom title={account.toUpperCase()} style={Styles.account} />
@@ -61,35 +61,41 @@ const UserInfoDetailScreen = ({
         </View>
 
         <InfoFrame
-          title="Introduce"
+          title={translate(EditUserInfoOptions.Introduce)}
           onEdit={() => {
-            navigation.navigate("EditUserInfo", { name: "Introduce" });
+            navigation.navigate(Screens.EditUserInfo, {
+              name: EditUserInfoOptions.Introduce,
+            });
           }}
+          translate={translate}
         >
           <InfoLine
-            iconName="user-alt"
-            title="Account"
-            iconSize={18}
+            iconName="person"
+            title={translate("username")}
+            iconSize={25}
             content={account}
           />
           <InfoLine
-            iconName="info"
-            title="Display name"
-            iconSize={20}
+            iconName="information"
+            title={translate("display_name")}
+            iconSize={30}
             content={displayName}
           />
         </InfoFrame>
 
         <InfoFrame
-          title="Contact"
+          title={translate(EditUserInfoOptions.Contact)}
           onEdit={() => {
-            navigation.navigate("EditUserInfo", { name: "Contact" });
+            navigation.navigate(Screens.EditUserInfo, {
+              name: EditUserInfoOptions.Contact,
+            });
           }}
+          translate={translate}
         >
           <InfoLine
-            iconName="envelope"
+            iconName="mail-open"
             title="Email"
-            iconSize={20}
+            iconSize={25}
             content={email}
           />
         </InfoFrame>
@@ -116,4 +122,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(UserInfoDetailScreen);
+)(withTranslate(UserInfoScreen));

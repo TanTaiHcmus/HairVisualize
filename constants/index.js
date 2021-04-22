@@ -1,5 +1,7 @@
 import { Dimensions } from "react-native";
 
+export const AppName = "Hair Visualize";
+
 export const screenWidth = Math.round(Dimensions.get("window").width);
 export const screenHeight = Math.round(Dimensions.get("window").height);
 export const imageHeight = (screenWidth * 0.8 * 3) / 4;
@@ -9,19 +11,40 @@ export const STATUS_MESSAGE = {
   ERROR: "error",
 };
 
+export const LanguageOptions = {
+  Vietnamese: "vi",
+  English: "en",
+};
+
 export const URL_SERVER = "http://157.230.43.147/api/v1";
 
 export const ACCESS_TOKEN = "ACCESS_TOKEN";
 
 export const headerNavigationStyle = {
-  headerStyle: {
-    backgroundColor: "#ee2a7b",
-  },
   headerTintColor: "#fff",
-  headerTitleStyle: {
-    fontWeight: "bold",
-  },
   headerTitleAlign: "center",
+};
+
+export const gradientHeader = ["#f6998e", "#ed7a96"];
+
+export const gradientBackground = ["#f59490", "#e253a0"];
+
+export const Screens = {
+  Login: "login",
+  Register: "register",
+  Home: "home",
+  Start: "start",
+  YourHairStyle: "your_hair_style",
+  HairVisualize: "hair_visualize",
+  AccountManager: "account_manager",
+  UserInfo: "user_info",
+  EditUserInfo: "edit_user_info",
+  History: "history",
+};
+
+export const EditUserInfoOptions = {
+  Introduce: "introduce",
+  Contact: "contact",
 };
 
 export const UsernameIsEmpty = "Username is empty!";

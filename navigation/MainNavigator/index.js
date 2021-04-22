@@ -5,105 +5,79 @@ import {
 } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
-import Icon from "react-native-vector-icons/FontAwesome5";
-import { headerNavigationStyle } from "../../constants";
-import HairStyleBankScreen from "../../screens/HairStyleBank";
+import { headerNavigationStyle, Screens } from "../../constants";
+import AccountInfoScreen from "../../screens/AccountManager/screens/AccountInfo";
 import HomeScreen from "../../screens/Home";
 import LoadYOurHairScreen from "../../screens/LoadYourHair";
-import UserInfoScreen from "../../screens/UserInfo/screens/UserInfoHome";
-import UserInfoDetailScreen from "../../screens/UserInfo/screens/UserInfoDetail";
+import UserInfoScreen from "../../screens/AccountManager/screens/UserInfo";
+import EditUserInfoScreen from "../../screens/AccountManager/screens/EditUserInfo";
 import VisualizeScreen from "../../screens/Visualize";
-import EditUserInfo from "../../screens/UserInfo/screens/EditUserInfo";
+import HeaderBackground from "../components/HeaderBackground";
+import TabBar from "../components/TabBar";
+import withTranslate from "../../HOC/withTranslate";
 
-function getHeaderTitle(route) {
-  const routeName = getFocusedRouteNameFromRoute(route) || "Home";
-
-  switch (routeName) {
-    case "Home":
-      return "Home";
-    case "HairStyleBank":
-      return "HairStyleBank";
-    case "UserInfo":
-      return "UserInfo";
-  }
+function getRouteName(route) {
+  return getFocusedRouteNameFromRoute(route) || Screens.Home;
 }
 
 const BottomTab = createBottomTabNavigator();
 
 const BottomTabNavigator = () => {
   return (
-    <BottomTab.Navigator
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused }) => {
-          let iconName;
-          switch (route.name) {
-            case "Home": {
-              iconName = "home";
-              break;
-            }
-            case "HairStyleBank": {
-              iconName = "university";
-              break;
-            }
-            case "UserInfo": {
-              iconName = "user-alt";
-              break;
-            }
-            default: {
-              break;
-            }
-          }
-          return (
-            <Icon
-              name={iconName}
-              size={27}
-              color={focused ? "#EE2A7B" : "#707070"}
-            />
-          );
-        },
-      })}
-    >
-      <BottomTab.Screen name="Home" component={HomeScreen} />
-      <BottomTab.Screen name="HairStyleBank" component={HairStyleBankScreen} />
-      <BottomTab.Screen name="UserInfo" component={UserInfoScreen} />
+    <BottomTab.Navigator tabBar={(props) => <TabBar {...props} />}>
+      <BottomTab.Screen name={Screens.Home} component={HomeScreen} />
+      <BottomTab.Screen
+        name={Screens.AccountManager}
+        component={AccountInfoScreen}
+      />
     </BottomTab.Navigator>
   );
 };
 
 const MainStack = createStackNavigator();
 
-const MainStackNavigator = () => {
+const MainStackNavigator = ({ translate }) => {
   return (
     <NavigationContainer>
       <MainStack.Navigator
-        initialRouteName="Home"
-        screenOptions={headerNavigationStyle}
+        initialRouteName={Screens.Home}
+        screenOptions={{
+          headerBackground: () => <HeaderBackground />,
+          ...headerNavigationStyle,
+        }}
       >
         <MainStack.Screen
-          name="Home"
+          name={Screens.Home}
           component={BottomTabNavigator}
-          options={({ route }) => ({
-            headerTitle: getHeaderTitle(route),
-          })}
+          options={({ route }) => {
+            const routeName = getRouteName(route);
+
+            return {
+              headerTitle: translate(routeName),
+            };
+          }}
         />
         <MainStack.Screen
           name="LoadYourHair"
           component={LoadYOurHairScreen}
-          options={({ route }) => ({ title: route.params.name })}
+          options={({ route }) => ({ headerTitle: route.params.name })}
         />
         <MainStack.Screen name="Visualize" component={VisualizeScreen} />
         <MainStack.Screen
-          name="UserInfoDetail"
-          component={UserInfoDetailScreen}
+          name={Screens.UserInfo}
+          component={UserInfoScreen}
+          options={{ headerTitle: translate(Screens.UserInfo) }}
         />
         <MainStack.Screen
-          name="EditUserInfo"
-          component={EditUserInfo}
-          options={({ route }) => ({ title: route.params.name })}
+          name={Screens.EditUserInfo}
+          component={EditUserInfoScreen}
+          options={({ route }) => ({
+            headerTitle: translate(route.params.name),
+          })}
         />
       </MainStack.Navigator>
     </NavigationContainer>
   );
 };
 
-export default MainStackNavigator;
+export default withTranslate(MainStackNavigator);

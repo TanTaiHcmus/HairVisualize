@@ -1,51 +1,52 @@
 import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
-  helpContainer: {
-    width: "100%",
-    marginBottom: 60,
-    display: "flex",
-    flexDirection: "row",
+  container: {
+    flex: 1,
     alignItems: "center",
-    justifyContent: "space-between",
+    paddingTop: 20,
   },
-  checkboxContainer: {
-    display: "flex",
-    flexDirection: "row",
+  logoContainer: {
+    height: 300,
+    justifyContent: "center",
     alignItems: "center",
   },
-  checkbox: {
-    marginRight: 8,
+  logo: {
+    color: "#fff",
   },
-  bold: {
-    fontWeight: "bold",
+  logoName: {
+    color: "#fff",
+    fontSize: 21,
+    marginTop: 10,
   },
-  socialLoginContainer: {
-    width: "100%",
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
+  inputContainer: {
+    paddingHorizontal: 30,
+    justifyContent: "center",
+    marginBottom: 20,
+  },
+  input: {
+    width: 350,
+    maxWidth: "100%",
+  },
+  controlContainer: {
+    alignItems: "center",
+    paddingBottom: 30,
+  },
+  loginButton: {
+    width: 200,
+    shadowColor: "#000",
+    shadowOpacity: 0.8,
+    elevation: 12,
     marginBottom: 50,
   },
-  socialLogin: {
-    width: "45%",
-    borderRadius: 30,
-    borderWidth: 1,
-    paddingVertical: 10,
-    display: "flex",
-    alignItems: "center",
-  },
-  loginQuestion: {
-    width: "100%",
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "center",
-  },
   loginText: {
-    color: "#EE2A7B",
-    marginLeft: 10,
+    color: "#fff",
   },
-  buttonText: {
+  forgetPassword: {
+    color: "#fff",
+    marginBottom: 15,
+  },
+  createAccount: {
     color: "#fff",
   },
 });

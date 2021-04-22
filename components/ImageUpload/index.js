@@ -1,6 +1,6 @@
 import React from "react";
 import { View } from "react-native";
-import Icon from "react-native-vector-icons/FontAwesome5";
+import Icon from "react-native-vector-icons/Ionicons";
 import { openCamera } from "../../utils/camera";
 import { openGallery } from "../../utils/gallery";
 import ButtonGradient from "../ButtonGradient";
@@ -30,7 +30,7 @@ const ImageUpload = ({ image, onChange }) => {
           <ImageDisplay image={image} style={Styles.image} />
         ) : (
           <View style={Styles.noImage}>
-            <Icon name="cloud-upload-alt" size={70} color="#EE2A7B" />
+            <Icon name="cloud-upload-alt" size={70} color="#594239" />
             <TextCustom
               title="Let's upload from server or open your camera"
               style={Styles.uploadFromServerText}
@@ -38,13 +38,13 @@ const ImageUpload = ({ image, onChange }) => {
           </View>
         )}
       </View>
-      <ButtonGradient linearGradientColors={["#ef538b", "#ff9707"]}>
+      <ButtonGradient linearGradientColors={["#0d518c", "#f285c1"]}>
         <Icon name="database" size={20} style={Styles.icon} />
         <TextCustom title="Load from server" style={Styles.buttonText} />
       </ButtonGradient>
 
       <ButtonGradient
-        linearGradientColors={["#ef538b", "#ff9707"]}
+        linearGradientColors={["#594239", "#bf8578"]}
         onPress={handleOpenGallery}
       >
         <Icon name="store" size={20} style={Styles.icon} />
@@ -52,7 +52,7 @@ const ImageUpload = ({ image, onChange }) => {
       </ButtonGradient>
 
       <ButtonGradient
-        linearGradientColors={["#ef538b", "#ff9707"]}
+        linearGradientColors={["#9ac7d9", "#0d518c"]}
         onPress={handleOpenCamera}
       >
         <Icon name="camera" size={20} style={Styles.icon} />

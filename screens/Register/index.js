@@ -1,31 +1,34 @@
+import { LinearGradient } from "expo-linear-gradient";
 import React, { useState } from "react";
-import { Alert, View } from "react-native";
-import Button from "../../components/Button";
-import Container from "../../components/Container";
+import { Alert, ScrollView, View } from "react-native";
+import Icon from "react-native-vector-icons/Ionicons";
+import ButtonGradient from "../../components/ButtonGradient";
 import DismissKeyboardView from "../../components/DismissKeyboardView";
 import KeyboardView from "../../components/KeyboardView";
 import TextCustom from "../../components/TextCustom";
 import TextInputWithIcon from "../../components/TextInputWithIcon";
 import {
+  AppName,
   ConfirmPasswordIsEmpty,
   ConfirmPasswordIsNotMatch,
   DisplayNameIsEmpty,
   EmailIsEmpty,
+  gradientBackground,
   PasswordIsEmpty,
   STATUS_MESSAGE,
   UsernameIsEmpty,
 } from "../../constants";
+import withTranslate from "../../HOC/withTranslate";
 import { isEmpty } from "../../utils";
 import { registerToServer } from "./action";
 import { Styles } from "./style";
 
-const RegisterScreen = ({ navigation }) => {
+const RegisterScreen = ({ translate, navigation }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [displayName, setDisplayName] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [isEnabled, setIsEnabled] = useState(false);
 
   const handleRegister = async () => {
     if (isEmpty(username)) {
@@ -64,86 +67,104 @@ const RegisterScreen = ({ navigation }) => {
       Alert.alert("Register successfully!");
       navigation.goBack();
     } else {
-      Alert.alert(response.data.message);
+      Alert.alert(response.data.data.message);
     }
   };
 
+  const handleGoBackLogin = () => {
+    navigation.goBack();
+  };
+
   return (
-    <KeyboardView enabled={isEnabled}>
-      <DismissKeyboardView>
-        <Container>
-          <TextInputWithIcon
-            iconName="user"
-            iconSize={24}
-            onChangeText={(text) => setUsername(text)}
-            value={username}
-            placeholder="Username"
-            onFocus={() => setIsEnabled(false)}
-            editable
-          />
+    <LinearGradient style={Styles.container} colors={gradientBackground}>
+      <ScrollView keyboardShouldPersistTaps="handled">
+        <View>
+          <KeyboardView>
+            <DismissKeyboardView>
+              <View style={Styles.logoContainer}>
+                <Icon name="logo-instagram" style={Styles.logo} size={100} />
+                <TextCustom title={AppName} style={Styles.logoName} />
+              </View>
 
-          <TextInputWithIcon
-            iconName="envelope"
-            iconSize={22}
-            onChangeText={(text) => setEmail(text)}
-            value={email}
-            placeholder="Email"
-            keyboardType="email-address"
-            onFocus={() => setIsEnabled(false)}
-            editable
-          />
+              <View style={Styles.inputContainer}>
+                <TextInputWithIcon
+                  iconName="person"
+                  iconSize={24}
+                  onChangeText={(text) => setUsername(text)}
+                  value={username}
+                  placeholder={translate("username")}
+                  style={Styles.input}
+                  editable
+                />
 
-          <TextInputWithIcon
-            iconName="info"
-            iconSize={24}
-            onChangeText={(text) => setDisplayName(text)}
-            value={displayName}
-            placeholder="Display name"
-            onFocus={() => setIsEnabled(false)}
-            editable
-          />
+                <TextInputWithIcon
+                  iconName="mail-open"
+                  iconSize={22}
+                  onChangeText={(text) => setEmail(text)}
+                  value={email}
+                  placeholder={translate("email")}
+                  keyboardType="email-address"
+                  style={Styles.input}
+                  editable
+                />
 
-          <TextInputWithIcon
-            iconName="lock"
-            iconSize={25}
-            onChangeText={(text) => setPassword(text)}
-            value={password}
-            placeholder="Password"
-            onFocus={() => setIsEnabled(false)}
-            isPassword
-            editable
-          />
+                <TextInputWithIcon
+                  iconName="information"
+                  iconSize={30}
+                  onChangeText={(text) => setDisplayName(text)}
+                  value={displayName}
+                  placeholder={translate("display_name")}
+                  style={Styles.input}
+                  editable
+                />
 
-          <TextInputWithIcon
-            iconName="lock"
-            iconSize={25}
-            onChangeText={(text) => setConfirmPassword(text)}
-            value={confirmPassword}
-            placeholder="Confirm password"
-            style={{ marginBottom: 80 }}
-            onFocus={() => setIsEnabled(true)}
-            isPassword
-            editable
-          />
+                <TextInputWithIcon
+                  iconName="lock-open"
+                  iconSize={25}
+                  onChangeText={(text) => setPassword(text)}
+                  value={password}
+                  placeholder={translate("password")}
+                  style={Styles.input}
+                  isPassword
+                  editable
+                />
 
-          <Button onPress={handleRegister}>
-            <TextCustom title="Register" style={Styles.buttonText}></TextCustom>
-          </Button>
+                <TextInputWithIcon
+                  iconName="lock-open"
+                  iconSize={25}
+                  onChangeText={(text) => setConfirmPassword(text)}
+                  value={confirmPassword}
+                  placeholder={translate("confirm_password")}
+                  style={Styles.input}
+                  isPassword
+                  editable
+                />
+              </View>
 
-          <View style={Styles.registerQuestion}>
-            <TextCustom title="Already registered?" />
-            <TextCustom
-              style={Styles.registerText}
-              onPress={() => {
-                navigation.goBack();
-              }}
-              title="Log in"
-            />
-          </View>
-        </Container>
-      </DismissKeyboardView>
-    </KeyboardView>
+              <View style={Styles.controlContainer}>
+                <ButtonGradient
+                  onPress={handleRegister}
+                  linearGradientColors={gradientBackground}
+                  style={Styles.registerButton}
+                >
+                  <TextCustom
+                    title={translate("register")}
+                    style={Styles.registerText}
+                  />
+                </ButtonGradient>
+
+                <TextCustom
+                  title={translate("already_registered")}
+                  onPress={handleGoBackLogin}
+                  style={Styles.backLogin}
+                />
+              </View>
+            </DismissKeyboardView>
+          </KeyboardView>
+        </View>
+      </ScrollView>
+    </LinearGradient>
   );
 };
 
-export default RegisterScreen;
+export default withTranslate(RegisterScreen);

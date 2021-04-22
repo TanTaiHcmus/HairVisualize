@@ -1,14 +1,19 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { View } from "react-native";
-import Icon from "react-native-vector-icons/FontAwesome5";
+import Icon from "react-native-vector-icons/Ionicons";
 import { connect } from "react-redux";
 import ImageDisplay from "../../../../components/ImageDisplay";
+import LoadingWrapper from "../../../../components/LoadingWrapper";
 import NavbarItem from "../../../../components/NavbarItem";
 import TextCustom from "../../../../components/TextCustom";
+import { Screens } from "../../../../constants";
+import withTranslate from "../../../../HOC/withTranslate";
 import { getUserInfoFromServer, logout } from "../../action";
+import ChangeLanguage from "./ChangeLanguage";
 import Styles from "./style";
 
-const UserInfoScreen = ({
+const AccountInfoScreen = ({
+  translate,
   navigation,
   getUserInfoConnect,
   logoutConnect,
@@ -16,18 +21,26 @@ const UserInfoScreen = ({
   displayName,
   avatar,
 }) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
-    getUserInfoConnect();
+    const getUserInfo = async () => {
+      setIsLoading(true);
+      await getUserInfoConnect();
+      setIsLoading(false);
+    };
+
+    getUserInfo();
   }, []);
 
   const defaultImage =
     "https://raw.githubusercontent.com/TanTaiHcmus/HairVisualize/master/Images/avatar.png";
 
   return (
-    <View style={Styles.container}>
+    <LoadingWrapper isLoading={isLoading} style={Styles.container}>
       <NavbarItem
         onPress={() => {
-          navigation.navigate("UserInfoDetail");
+          navigation.navigate(Screens.UserInfo);
         }}
       >
         <View style={Styles.avatarContainer}>
@@ -48,20 +61,27 @@ const UserInfoScreen = ({
       </NavbarItem>
 
       <NavbarItem>
-        <Icon name="store" size={22} style={Styles.icon} />
-        <TextCustom title="Your hair store" style={Styles.navbarTitle} />
+        <Icon name="time" size={26} style={Styles.icon} />
+        <TextCustom title={translate("history")} style={Styles.navbarTitle} />
+      </NavbarItem>
+
+      <ChangeLanguage translate={translate} />
+
+      <NavbarItem>
+        <Icon name="help-buoy" size={25} style={Styles.icon} />
+        <TextCustom title={translate("help")} style={Styles.navbarTitle} />
       </NavbarItem>
 
       <NavbarItem>
-        <Icon name="history" size={22} style={Styles.icon} />
-        <TextCustom title="History" style={Styles.navbarTitle} />
+        <Icon name="information" size={30} style={Styles.icon} />
+        <TextCustom title={translate("app_info")} style={Styles.navbarTitle} />
       </NavbarItem>
 
       <NavbarItem onPress={logoutConnect}>
-        <Icon name="power-off" size={22} style={Styles.icon} />
-        <TextCustom title="Log out" style={Styles.navbarTitle} />
+        <Icon name="log-out" size={28} style={Styles.icon} />
+        <TextCustom title={translate("log_out")} style={Styles.navbarTitle} />
       </NavbarItem>
-    </View>
+    </LoadingWrapper>
   );
 };
 
@@ -78,4 +98,7 @@ const mapDispatchToProps = {
   logoutConnect: logout,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserInfoScreen);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withTranslate(AccountInfoScreen));

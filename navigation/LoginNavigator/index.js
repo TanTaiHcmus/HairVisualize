@@ -1,7 +1,7 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
-import { headerNavigationStyle } from "../../constants";
+import { Screens } from "../../constants";
 import LoginScreen from "../../screens/Login";
 import RegisterScreen from "../../screens/Register";
 
@@ -10,11 +10,13 @@ const LoginStack = createStackNavigator();
 const LoginStackScreen = () => {
   return (
     <LoginStack.Navigator
-      initialRouteName="Login"
-      screenOptions={headerNavigationStyle}
+      initialRouteName={Screens.Login}
+      screenOptions={{
+        headerShown: false,
+      }}
     >
-      <LoginStack.Screen name="Login" component={LoginScreen} />
-      <LoginStack.Screen name="Register" component={RegisterScreen} />
+      <LoginStack.Screen name={Screens.Login} component={LoginScreen} />
+      <LoginStack.Screen name={Screens.Register} component={RegisterScreen} />
     </LoginStack.Navigator>
   );
 };

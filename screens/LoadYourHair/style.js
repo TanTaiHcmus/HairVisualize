@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
   nextButton: {
-    marginTop: 30,
+    marginTop: 40,
     alignSelf: "center",
     paddingHorizontal: 50,
     width: "auto",

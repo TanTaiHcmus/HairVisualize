@@ -2,28 +2,23 @@ import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
   container: {
-    width: "100%",
-    paddingVertical: 10,
+    height: 50,
     borderRadius: 25,
-    borderWidth: 1,
     paddingHorizontal: 30,
-    borderColor: "#707070",
-    display: "flex",
+    backgroundColor: "#fff",
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 35,
   },
-  invalid: {
-    borderColor: "red",
-  },
   inputText: {
     flex: 1,
     fontSize: 16,
-    color: "#707070",
+    color: "#d9c2ba",
     paddingHorizontal: 13,
   },
   icon: {
     width: 25,
     textAlign: "center",
+    color: "#d9c2ba",
   },
 });

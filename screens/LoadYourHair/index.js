@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Alert } from "react-native";
-import Icon from "react-native-vector-icons/FontAwesome5";
+import Icon from "react-native-vector-icons/Ionicons";
 import Button from "../../components/Button";
 import Container from "../../components/Container";
 import ImageUpload from "../../components/ImageUpload";

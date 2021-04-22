@@ -7,10 +7,11 @@ export default StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 40,
   },
-  editButton: {
+  saveButton: {
     fontSize: 16,
     fontWeight: "bold",
     color: "#fff",
     paddingRight: 15,
+    alignSelf: "center",
   },
 });

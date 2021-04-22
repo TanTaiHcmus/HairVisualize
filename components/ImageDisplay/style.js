@@ -5,26 +5,16 @@ export default StyleSheet.create({
     width: "100%",
     borderWidth: 1,
     borderRadius: 10,
-    borderColor: "#707070",
+    borderColor: "#0d0d0d",
     overflow: "hidden",
+  },
+  modal: {
+    flex: 1,
   },
   image: {
     width: "100%",
   },
-  iconClose: {
-    alignSelf: "flex-end",
-    color: "#fff",
-  },
-  modal: {
-    flex: 1,
-    justifyContent: "center",
-    backgroundColor: "rgba(0,0,0, 0.7)",
-  },
   imageShowContainer: {
-    position: "absolute",
     paddingHorizontal: 20,
-  },
-  outsideImage: {
-    flex: 1,
   },
 });

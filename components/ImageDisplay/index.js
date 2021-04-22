@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import { Image, Modal, TouchableOpacity, View } from "react-native";
+import { Image, View, TouchableOpacity } from "react-native";
 import { isEmpty } from "../../utils";
+import LoadingWrapper from "../LoadingWrapper";
+import ModalCustom from "../ModalCustom";
 import Styles from "./style";
 
 const ImageDisplay = ({
@@ -9,9 +11,15 @@ const ImageDisplay = ({
   style,
 }) => {
   const [isShowModal, setIsShowModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleImagePress = async () => {
     setIsShowModal(true);
+  };
+
+  const handleModalExit = () => {
+    setIsLoading(false);
+    setIsShowModal(false);
   };
 
   return (
@@ -25,34 +33,25 @@ const ImageDisplay = ({
           resizeMode="stretch"
         />
       </TouchableOpacity>
-      <Modal
-        animationType="slide"
-        transparent
-        visible={isShowModal}
-        presentationStyle="overFullScreen"
-        onRequestClose={() => {
-          setIsShowModal(false);
-        }}
-      >
-        <View style={Styles.modal}>
-          <TouchableOpacity
-            activeOpacity={1}
-            style={Styles.outsideImage}
-            onPress={() => {
-              setIsShowModal(false);
-            }}
-          />
-          <TouchableOpacity activeOpacity={1} style={Styles.imageShowContainer}>
+      {isShowModal && (
+        <ModalCustom onExit={handleModalExit}>
+          <LoadingWrapper isLoading={isLoading} style={Styles.modal}>
             <Image
               style={[Styles.image, style]}
               source={{
                 uri: isEmpty(image) ? defaultImage : image,
               }}
               resizeMode="stretch"
+              onLoadStart={() => {
+                setIsLoading(true);
+              }}
+              onLoadEnd={() => {
+                setIsLoading(false);
+              }}
             />
-          </TouchableOpacity>
-        </View>
-      </Modal>
+          </LoadingWrapper>
+        </ModalCustom>
+      )}
     </View>
   );
 };
