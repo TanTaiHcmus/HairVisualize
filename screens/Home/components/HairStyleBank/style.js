@@ -8,6 +8,7 @@ export default StyleSheet.create({
     shadowColor: "#000",
     shadowOpacity: 0.8,
     overflow: "hidden",
+    paddingBottom: 10,
   },
   image: {
     width: 140,
@@ -21,5 +22,9 @@ export default StyleSheet.create({
   },
   itemHorizontal: {
     marginRight: 20,
+  },
+  ratingNumber: {
+    marginTop: 5,
+    marginLeft: 10,
   },
 });

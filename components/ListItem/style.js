@@ -8,7 +8,7 @@ export default StyleSheet.create({
     marginTop: 30,
   },
   title: {
-    color: "#ed7a96",
+    color: "#e253a0",
     fontWeight: "bold",
   },
   buttonViewAll: {},

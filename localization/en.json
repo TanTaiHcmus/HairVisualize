@@ -44,5 +44,6 @@
     "open_gallery": "Open gallery",
     "continue": "Continue",
     "please_upload_des_image": "Please upload destination image",
-    "please_upload_ori_image": "Please upload origin image"
+    "please_upload_ori_image": "Please upload origin image",
+    "rating": "Rating"
 }

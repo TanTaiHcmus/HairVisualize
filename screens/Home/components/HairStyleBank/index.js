@@ -2,15 +2,18 @@ import React, { useEffect, useState } from "react";
 import { View } from "react-native";
 import ImageDisplay from "../../../../components/ImageDisplay";
 import ListItem from "../../../../components/ListItem";
+import Rating from "../../../../components/Rating";
 import TextCustom from "../../../../components/TextCustom";
 import { Screens } from "../../../../constants";
 import withTranslate from "../../../../HOC/withTranslate";
+import RatingNumber from "../RatingNumber";
 import Styles from "./style";
 
 const HairStyleBank = ({ translate, navigation, isHorizontal }) => {
   const [data, setData] = useState([]);
   const [viewImage, setViewImage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isViewRating, setIsViewRating] = useState(false);
 
   const numberItemView = isHorizontal ? 4 : 12;
 
@@ -53,6 +56,12 @@ const HairStyleBank = ({ translate, navigation, isHorizontal }) => {
           console.log("visualize", item);
         },
       },
+      {
+        title: translate("rating"),
+        onPress: () => {
+          setIsViewRating(true);
+        },
+      },
     ];
 
     return (
@@ -68,22 +77,32 @@ const HairStyleBank = ({ translate, navigation, isHorizontal }) => {
           style={Styles.image}
         />
         <TextCustom title={item.name} style={Styles.itemName} />
+        <RatingNumber rating={3} style={Styles.ratingNumber} />
       </View>
     );
   };
 
   return (
-    <ListItem
-      title={translate(Screens.HairStyleBank)}
-      onViewAll={() => {
-        navigation.navigate(Screens.HairStyleBank);
-      }}
-      data={data}
-      isHorizontal={isHorizontal}
-      onScrollEnd={getDataFromServer}
-      isLoading={isLoading}
-      ItemComponent={Item}
-    />
+    <View>
+      <ListItem
+        title={translate(Screens.HairStyleBank)}
+        onViewAll={() => {
+          navigation.navigate(Screens.HairStyleBank);
+        }}
+        data={data}
+        isHorizontal={isHorizontal}
+        onScrollEnd={getDataFromServer}
+        isLoading={isLoading}
+        ItemComponent={Item}
+      />
+      {isViewRating && (
+        <Rating
+          onExit={() => {
+            setIsViewRating(false);
+          }}
+        />
+      )}
+    </View>
   );
 };
 
