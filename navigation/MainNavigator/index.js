@@ -6,15 +6,19 @@ import {
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
 import { headerNavigationStyle, Screens } from "../../constants";
+import withTranslate from "../../HOC/withTranslate";
 import AccountInfoScreen from "../../screens/AccountManager/screens/AccountInfo";
-import HomeScreen from "../../screens/Home";
-import LoadYOurHairScreen from "../../screens/LoadYourHair";
-import UserInfoScreen from "../../screens/AccountManager/screens/UserInfo";
+import AppInfoScreen from "../../screens/AccountManager/screens/AppInfo";
 import EditUserInfoScreen from "../../screens/AccountManager/screens/EditUserInfo";
-import VisualizeScreen from "../../screens/Visualize";
+import HelpScreen from "../../screens/AccountManager/screens/Help";
+import HistoryScreen from "../../screens/AccountManager/screens/History";
+import UserInfoScreen from "../../screens/AccountManager/screens/UserInfo";
+import HomeScreen from "../../screens/Home";
+import HairStyleBankScreen from "../../screens/Home/components/HairStyleBank";
+import YourHairStylesScreen from "../../screens/Home/components/YourHairStyles";
 import HeaderBackground from "../components/HeaderBackground";
 import TabBar from "../components/TabBar";
-import withTranslate from "../../HOC/withTranslate";
+import HairVisualizeScreen from "../../screens/Visualize";
 
 function getRouteName(route) {
   return getFocusedRouteNameFromRoute(route) || Screens.Home;
@@ -57,12 +61,7 @@ const MainStackNavigator = ({ translate }) => {
             };
           }}
         />
-        <MainStack.Screen
-          name="LoadYourHair"
-          component={LoadYOurHairScreen}
-          options={({ route }) => ({ headerTitle: route.params.name })}
-        />
-        <MainStack.Screen name="Visualize" component={VisualizeScreen} />
+
         <MainStack.Screen
           name={Screens.UserInfo}
           component={UserInfoScreen}
@@ -74,6 +73,36 @@ const MainStackNavigator = ({ translate }) => {
           options={({ route }) => ({
             headerTitle: translate(route.params.name),
           })}
+        />
+        <MainStack.Screen
+          name={Screens.Help}
+          component={HelpScreen}
+          options={{ headerTitle: translate(Screens.Help) }}
+        />
+        <MainStack.Screen
+          name={Screens.History}
+          component={HistoryScreen}
+          options={{ headerTitle: translate(Screens.History) }}
+        />
+        <MainStack.Screen
+          name={Screens.AppInfo}
+          component={AppInfoScreen}
+          options={{ headerTitle: translate(Screens.AppInfo) }}
+        />
+        <MainStack.Screen
+          name={Screens.HairStyleBank}
+          component={HairStyleBankScreen}
+          options={{ headerTitle: translate(Screens.HairStyleBank) }}
+        />
+        <MainStack.Screen
+          name={Screens.YourHairStyle}
+          component={YourHairStylesScreen}
+          options={{ headerTitle: translate(Screens.YourHairStyle) }}
+        />
+        <MainStack.Screen
+          name={Screens.HairVisualize}
+          component={HairVisualizeScreen}
+          options={{ headerTitle: translate(Screens.HairVisualize) }}
         />
       </MainStack.Navigator>
     </NavigationContainer>

@@ -6,6 +6,7 @@ import EditText from "../../../../components/EditText";
 import KeyboardView from "../../../../components/KeyboardView";
 import LoadingWrapper from "../../../../components/LoadingWrapper";
 import TextCustom from "../../../../components/TextCustom";
+import TextInputCustom from "../../../../components/TextInputCustom";
 import { EditUserInfoOptions } from "../../../../constants";
 import withTranslate from "../../../../HOC/withTranslate";
 import { updateUserInfoToServer } from "../../action";
@@ -59,30 +60,29 @@ const EditUSerInfoScreen = ({
     switch (route.params.name) {
       case EditUserInfoOptions.Introduce: {
         return (
-          <View style={{ width: "100%" }}>
-            <EditText
-              title={translate("username")}
-              value={accountServer}
-              editable={false}
-            />
+          <View>
+            <EditText title={translate("username")} editable={false}>
+              <TextInputCustom value={accountServer} editable={false} />
+            </EditText>
 
-            <EditText
-              title={translate("display_name")}
-              onChangeText={(text) => setDisplayName(text)}
-              value={displayName}
-            />
+            <EditText title={translate("display_name")}>
+              <TextInputCustom
+                onChangeText={(text) => setDisplayName(text)}
+                value={displayName}
+              />
+            </EditText>
           </View>
         );
       }
       case EditUserInfoOptions.Contact: {
         return (
-          <View style={{ width: "100%" }}>
-            <EditText
-              title={translate("email")}
-              value={email}
-              onChangeText={(text) => setEmail(text)}
-              editable
-            />
+          <View>
+            <EditText title={translate("email")}>
+              <TextInputCustom
+                value={email}
+                onChangeText={(text) => setEmail(text)}
+              />
+            </EditText>
           </View>
         );
       }

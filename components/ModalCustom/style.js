@@ -12,6 +12,8 @@ export default StyleSheet.create({
   content: {
     position: "absolute",
     width: "100%",
+    maxWidth: 400,
     paddingHorizontal: 20,
+    alignSelf: "center",
   },
 });

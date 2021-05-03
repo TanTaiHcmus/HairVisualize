@@ -1,9 +1,10 @@
 import { LinearGradient } from "expo-linear-gradient";
 import React, { useState } from "react";
-import { Alert, ScrollView, View } from "react-native";
+import { Alert, View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { connect } from "react-redux";
 import ButtonGradient from "../../components/ButtonGradient";
+import ScrollContainer from "../../components/ScrollContainer";
 import DismissKeyboardView from "../../components/DismissKeyboardView";
 import KeyboardView from "../../components/KeyboardView";
 import TextCustom from "../../components/TextCustom";
@@ -51,66 +52,64 @@ const LoginScreen = ({ translate, navigation, handleLoginConnect }) => {
 
   return (
     <LinearGradient style={Styles.container} colors={gradientBackground}>
-      <ScrollView keyboardShouldPersistTaps="handled">
-        <View>
-          <KeyboardView>
-            <DismissKeyboardView>
-              <View style={Styles.logoContainer}>
-                <Icon name="logo-instagram" style={Styles.logo} size={100} />
-                <TextCustom title={AppName} style={Styles.logoName} />
-              </View>
+      <ScrollContainer>
+        <KeyboardView>
+          <DismissKeyboardView>
+            <View style={Styles.logoContainer}>
+              <Icon name="logo-instagram" style={Styles.logo} size={100} />
+              <TextCustom title={AppName} style={Styles.logoName} />
+            </View>
 
-              <View style={Styles.inputContainer}>
-                <TextInputWithIcon
-                  iconName="person"
-                  iconSize={24}
-                  onChangeText={(text) => setUsername(text)}
-                  value={username}
-                  placeholder={translate("username")}
-                  style={Styles.input}
-                  editable
-                />
+            <View style={Styles.inputContainer}>
+              <TextInputWithIcon
+                iconName="person"
+                iconSize={24}
+                onChangeText={(text) => setUsername(text)}
+                value={username}
+                placeholder={translate("username")}
+                style={Styles.input}
+                editable
+              />
 
-                <TextInputWithIcon
-                  iconName="lock-open"
-                  iconSize={25}
-                  onChangeText={(text) => setPassword(text)}
-                  value={password}
-                  placeholder={translate("password")}
-                  style={Styles.input}
-                  isPassword
-                  editable
-                />
-              </View>
+              <TextInputWithIcon
+                iconName="lock-open"
+                iconSize={25}
+                onChangeText={(text) => setPassword(text)}
+                value={password}
+                placeholder={translate("password")}
+                style={Styles.input}
+                isPassword
+                editable
+              />
+            </View>
 
-              <View style={Styles.controlContainer}>
-                <ButtonGradient
-                  onPress={handleLoginClicked}
-                  linearGradientColors={gradientBackground}
-                  style={Styles.loginButton}
-                >
-                  <TextCustom
-                    title={translate("login")}
-                    style={Styles.loginText}
-                  />
-                </ButtonGradient>
-
+            <View style={Styles.controlContainer}>
+              <ButtonGradient
+                onPress={handleLoginClicked}
+                linearGradientColors={gradientBackground}
+                style={Styles.loginButton}
+              >
                 <TextCustom
-                  onPress={handleForgetPassword}
-                  title={translate("forgot_password")}
-                  style={Styles.forgetPassword}
+                  title={translate("login")}
+                  style={Styles.loginText}
                 />
+              </ButtonGradient>
 
-                <TextCustom
-                  onPress={handleCreateNewAccount}
-                  title={translate("create_account")}
-                  style={Styles.createAccount}
-                />
-              </View>
-            </DismissKeyboardView>
-          </KeyboardView>
-        </View>
-      </ScrollView>
+              <TextCustom
+                onPress={handleForgetPassword}
+                title={translate("forgot_password")}
+                style={Styles.forgetPassword}
+              />
+
+              <TextCustom
+                onPress={handleCreateNewAccount}
+                title={translate("create_account")}
+                style={Styles.createAccount}
+              />
+            </View>
+          </DismissKeyboardView>
+        </KeyboardView>
+      </ScrollContainer>
     </LinearGradient>
   );
 };

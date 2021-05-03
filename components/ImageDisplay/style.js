@@ -8,13 +8,7 @@ export default StyleSheet.create({
     borderColor: "#0d0d0d",
     overflow: "hidden",
   },
-  modal: {
-    flex: 1,
-  },
   image: {
     width: "100%",
-  },
-  imageShowContainer: {
-    paddingHorizontal: 20,
   },
 });

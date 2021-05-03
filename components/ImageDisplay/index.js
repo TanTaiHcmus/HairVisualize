@@ -1,59 +1,60 @@
 import React, { useState } from "react";
-import { Image, View, TouchableOpacity } from "react-native";
+import { Image, TouchableOpacity, View } from "react-native";
+import withTranslate from "../../HOC/withTranslate";
 import { isEmpty } from "../../utils";
 import LoadingWrapper from "../LoadingWrapper";
-import ModalCustom from "../ModalCustom";
+import OptionsPopup from "../OptionsPopup";
 import Styles from "./style";
 
 const ImageDisplay = ({
+  translate,
   image,
   defaultImage = "https://raw.githubusercontent.com/TanTaiHcmus/HairVisualize/master/Images/image.png",
+  onPressOptions = [],
   style,
 }) => {
-  const [isShowModal, setIsShowModal] = useState(false);
+  const [isShowImageOptions, setIsShowImageOptions] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleImagePress = async () => {
-    setIsShowModal(true);
+    setIsShowImageOptions(true);
   };
 
-  const handleModalExit = () => {
-    setIsLoading(false);
-    setIsShowModal(false);
+  const handleImageOptionsExit = () => {
+    setIsShowImageOptions(false);
   };
 
   return (
     <View>
-      <TouchableOpacity onPress={handleImagePress}>
-        <Image
-          style={[Styles.image, style]}
-          source={{
-            uri: isEmpty(image) ? defaultImage : image,
-          }}
-          resizeMode="stretch"
+      <LoadingWrapper isLoading={isLoading}>
+        <TouchableOpacity
+          onPress={onPressOptions.length > 0 ? handleImagePress : undefined}
+          activeOpacity={onPressOptions.length > 0 ? 0.2 : 1}
+        >
+          <Image
+            style={[Styles.image, style]}
+            source={{
+              uri: isEmpty(image) ? defaultImage : image,
+            }}
+            resizeMode="stretch"
+            onLoadStart={() => {
+              setIsLoading(true);
+            }}
+            onLoadEnd={() => {
+              setIsLoading(false);
+            }}
+          />
+        </TouchableOpacity>
+      </LoadingWrapper>
+      {isShowImageOptions && (
+        <OptionsPopup
+          title={translate("select_image_options")}
+          options={onPressOptions}
+          onExit={handleImageOptionsExit}
         />
-      </TouchableOpacity>
-      {isShowModal && (
-        <ModalCustom onExit={handleModalExit}>
-          <LoadingWrapper isLoading={isLoading} style={Styles.modal}>
-            <Image
-              style={[Styles.image, style]}
-              source={{
-                uri: isEmpty(image) ? defaultImage : image,
-              }}
-              resizeMode="stretch"
-              onLoadStart={() => {
-                setIsLoading(true);
-              }}
-              onLoadEnd={() => {
-                setIsLoading(false);
-              }}
-            />
-          </LoadingWrapper>
-        </ModalCustom>
       )}
     </View>
   );
 };
 
-export default React.memo(ImageDisplay);
+export default React.memo(withTranslate(ImageDisplay));

@@ -1,10 +1,9 @@
 import React from "react";
 import { View } from "react-native";
 import TextCustom from "../TextCustom";
-import TextInputCustom from "../TextInputCustom";
 import Styles from "./style";
 
-const EditText = ({ title, value, onChangeText, editable = true }) => {
+const EditText = ({ title, children, editable = true }) => {
   return (
     <View
       style={[
@@ -17,11 +16,7 @@ const EditText = ({ title, value, onChangeText, editable = true }) => {
       ]}
     >
       <TextCustom title={title} style={Styles.title} />
-      <TextInputCustom
-        onChangeText={onChangeText}
-        value={value}
-        editable={editable}
-      />
+      {children}
     </View>
   );
 };

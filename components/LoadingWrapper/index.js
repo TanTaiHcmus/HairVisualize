@@ -7,7 +7,7 @@ const LoadingWrapper = ({ children, isLoading, style }) => {
     <View style={style}>
       {isLoading && (
         <ActivityIndicator
-          color="#0d0d0d"
+          color="#0d518c"
           size="large"
           style={Styles.loading}
         />

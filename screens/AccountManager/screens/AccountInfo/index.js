@@ -60,19 +60,31 @@ const AccountInfoScreen = ({
         </View>
       </NavbarItem>
 
-      <NavbarItem>
+      <NavbarItem
+        onPress={() => {
+          navigation.navigate(Screens.History);
+        }}
+      >
         <Icon name="time" size={26} style={Styles.icon} />
         <TextCustom title={translate("history")} style={Styles.navbarTitle} />
       </NavbarItem>
 
       <ChangeLanguage translate={translate} />
 
-      <NavbarItem>
+      <NavbarItem
+        onPress={() => {
+          navigation.navigate(Screens.Help);
+        }}
+      >
         <Icon name="help-buoy" size={25} style={Styles.icon} />
         <TextCustom title={translate("help")} style={Styles.navbarTitle} />
       </NavbarItem>
 
-      <NavbarItem>
+      <NavbarItem
+        onPress={() => {
+          navigation.navigate(Screens.AppInfo);
+        }}
+      >
         <Icon name="information" size={30} style={Styles.icon} />
         <TextCustom title={translate("app_info")} style={Styles.navbarTitle} />
       </NavbarItem>

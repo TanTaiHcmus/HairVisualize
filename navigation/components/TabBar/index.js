@@ -23,7 +23,7 @@ const TabBar = ({ state, navigation }) => {
         <LinearGradient colors={gradientBackground} style={Styles.startButton}>
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate(Screens.UserInfo);
+              navigation.navigate(Screens.HairVisualize);
             }}
           >
             <Icon name="add" size={45} color="#fff" />

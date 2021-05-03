@@ -1,22 +1,59 @@
 import { StyleSheet } from "react-native";
-import React from "react";
+import { screenWidth } from "../../constants";
 
 export default StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+  },
   button: {
+    width: 200,
     alignSelf: "center",
-    paddingHorizontal: 50,
-    width: "auto",
+    marginBottom: 50,
+    elevation: 5,
+    shadowColor: "#000",
+    shadowOpacity: 0.8,
+  },
+  textButton: {
+    color: "#fff",
+  },
+  itemContainer: {
+    width: screenWidth,
+    alignItems: "center",
+    paddingHorizontal: 10,
+  },
+  headerContainer: {
+    marginTop: 50,
+    marginBottom: 30,
+    justifyContent: "center",
+  },
+  titleImage: {
+    fontSize: 20,
   },
   imageContainer: {
     width: "100%",
-    borderWidth: 1,
+    maxWidth: 400,
     borderRadius: 10,
-    borderColor: "#0d0d0d",
-    marginBottom: 50,
     overflow: "hidden",
+    elevation: 10,
+    backgroundColor: "#fff",
+    shadowColor: "#000",
+    shadowOpacity: 0.8,
   },
-  buttonText: {
-    color: "#fff",
-    fontSize: 16,
+  image: {
+    aspectRatio: 3 / 4,
+  },
+  icon: {
+    textAlign: "center",
+    position: "absolute",
+    width: 30,
+    color: "#e253a0",
+  },
+  leftIcon: {
+    left: -35,
+  },
+  rightIcon: {
+    right: -35,
   },
 });

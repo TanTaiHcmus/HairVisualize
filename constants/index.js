@@ -4,7 +4,6 @@ export const AppName = "Hair Visualize";
 
 export const screenWidth = Math.round(Dimensions.get("window").width);
 export const screenHeight = Math.round(Dimensions.get("window").height);
-export const imageHeight = (screenWidth * 0.8 * 3) / 4;
 
 export const STATUS_MESSAGE = {
   SUCCESS: "success",
@@ -35,11 +34,14 @@ export const Screens = {
   Home: "home",
   Start: "start",
   YourHairStyle: "your_hair_style",
+  HairStyleBank: "hair_style_bank",
   HairVisualize: "hair_visualize",
   AccountManager: "account_manager",
   UserInfo: "user_info",
   EditUserInfo: "edit_user_info",
   History: "history",
+  Help: "help",
+  AppInfo: "app_info",
 };
 
 export const EditUserInfoOptions = {

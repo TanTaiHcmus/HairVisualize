@@ -1,65 +1,44 @@
 import React from "react";
 import { View } from "react-native";
-import Icon from "react-native-vector-icons/Ionicons";
+import withTranslate from "../../HOC/withTranslate";
 import { openCamera } from "../../utils/camera";
 import { openGallery } from "../../utils/gallery";
-import ButtonGradient from "../ButtonGradient";
 import ImageDisplay from "../ImageDisplay";
 import TextCustom from "../TextCustom";
-import { Styles } from "./style";
+import Styles from "./style";
 
-const ImageUpload = ({ image, onChange }) => {
-  const handleOpenCamera = async () => {
-    const result = await openCamera([4, 3]);
-    if (result) {
-      onChange(result);
-    }
-  };
-
-  const handleOpenGallery = async () => {
-    const result = await openGallery([4, 3]);
-    if (result) {
-      onChange(result);
-    }
-  };
+const ImageUpload = ({ translate, title, image, onChange }) => {
+  const onPressOptions = [
+    {
+      title: translate("open_camera"),
+      onPress: async () => {
+        const result = await openCamera([3, 4]);
+        if (result) {
+          onChange(result);
+        }
+      },
+    },
+    {
+      title: translate("open_gallery"),
+      onPress: async () => {
+        const result = await openGallery([3, 4]);
+        if (result) {
+          onChange(result);
+        }
+      },
+    },
+  ];
 
   return (
     <View style={Styles.container}>
-      <View style={Styles.imageContainer}>
-        {image ? (
-          <ImageDisplay image={image} style={Styles.image} />
-        ) : (
-          <View style={Styles.noImage}>
-            <Icon name="cloud-upload-alt" size={70} color="#594239" />
-            <TextCustom
-              title="Let's upload from server or open your camera"
-              style={Styles.uploadFromServerText}
-            />
-          </View>
-        )}
-      </View>
-      <ButtonGradient linearGradientColors={["#0d518c", "#f285c1"]}>
-        <Icon name="database" size={20} style={Styles.icon} />
-        <TextCustom title="Load from server" style={Styles.buttonText} />
-      </ButtonGradient>
-
-      <ButtonGradient
-        linearGradientColors={["#594239", "#bf8578"]}
-        onPress={handleOpenGallery}
-      >
-        <Icon name="store" size={20} style={Styles.icon} />
-        <TextCustom title="Load from gallery" style={Styles.buttonText} />
-      </ButtonGradient>
-
-      <ButtonGradient
-        linearGradientColors={["#9ac7d9", "#0d518c"]}
-        onPress={handleOpenCamera}
-      >
-        <Icon name="camera" size={20} style={Styles.icon} />
-        <TextCustom title="Open camera" style={Styles.buttonText} />
-      </ButtonGradient>
+      <TextCustom title={title} style={Styles.title} />
+      <ImageDisplay
+        image={image}
+        onPressOptions={onPressOptions}
+        style={Styles.image}
+      />
     </View>
   );
 };
 
-export default ImageUpload;
+export default withTranslate(ImageUpload);

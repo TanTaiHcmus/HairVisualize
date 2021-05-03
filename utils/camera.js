@@ -13,14 +13,14 @@ const requestCameraPermission = async () => {
   }
 };
 
-export const openCamera = async () => {
+export const openCamera = async (aspect) => {
   const hasPermission = await requestCameraPermission();
 
   if (hasPermission) {
     let result = await ImagePicker.launchCameraAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
-      aspect: [4, 3],
+      aspect,
       quality: 1,
     });
 

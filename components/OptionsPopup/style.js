@@ -2,9 +2,6 @@ import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
   container: {
-    width: "100%",
-    maxWidth: 350,
-    alignSelf: "center",
     borderRadius: 8,
     overflow: "hidden",
   },

@@ -1,40 +1,20 @@
-import { StyleSheet, Dimensions } from "react-native";
-import { imageHeight } from "../../constants";
+import { StyleSheet } from "react-native";
 
-export const Styles = StyleSheet.create({
+export default StyleSheet.create({
   container: {
-    width: "100%",
-  },
-  imageContainer: {
-    width: "100%",
-    aspectRatio: 4 / 3,
-    borderWidth: 1,
-    borderRadius: 10,
-    borderColor: "#0d0d0d",
-    marginBottom: 50,
-    overflow: "hidden",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingVertical: 30,
+    paddingHorizontal: 25,
   },
   image: {
-    aspectRatio: 4 / 3,
+    width: 200,
+    borderRadius: 10,
+    aspectRatio: 3 / 4,
   },
-  noImage: {
-    width: "100%",
-    height: "100%",
-    paddingHorizontal: 20,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  uploadFromServerText: {
-    marginTop: 20,
+  title: {
+    width: 150,
     textAlign: "center",
-    fontSize: 16,
-  },
-  buttonText: {
-    color: "#fff",
-    fontSize: 16,
-  },
-  icon: {
-    marginRight: 20,
-    color: "#fff",
   },
 });

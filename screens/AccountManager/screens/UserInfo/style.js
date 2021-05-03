@@ -23,4 +23,9 @@ export default StyleSheet.create({
     fontWeight: "bold",
     marginTop: 10,
   },
+  buttonChangeAvatar: {
+    position: "absolute",
+    top: 40,
+    right: -55,
+  },
 });
