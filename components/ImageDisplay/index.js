@@ -9,7 +9,7 @@ import Styles from "./style";
 const ImageDisplay = ({
   translate,
   image,
-  defaultImage = "https://raw.githubusercontent.com/TanTaiHcmus/HairVisualize/master/Images/image.png",
+  defaultImage = "https://raw.githubusercontent.com/TanTaiHcmus/HairVisualize/master/Images/noImage.png",
   onPressOptions = [],
   style,
 }) => {
