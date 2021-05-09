@@ -34,13 +34,8 @@ export const getUserInfoFromServer = () => async (dispatch) => {
   const response = await UserApi.getUserInfo();
 
   if (response.message === STATUS_MESSAGE.SUCCESS) {
-    const {
-      account,
-      display_name: displayName,
-      avatar,
-      email,
-      updated_at,
-    } = response.data;
+    const { account, display_name: displayName, avatar, email, updated_at } =
+      response.data || {};
 
     dispatch({
       type: UPDATE_USER_INFO,

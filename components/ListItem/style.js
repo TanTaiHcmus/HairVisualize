@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { screenWidth } from "../../constants";
 
 export default StyleSheet.create({
   headerContainer: {
@@ -25,5 +26,13 @@ export default StyleSheet.create({
     height: 30,
     justifyContent: "center",
     alignItems: "center",
+  },
+  itemVertical: {
+    margin: 15,
+    width: screenWidth * 0.5 - 30,
+  },
+  itemHorizontal: {
+    marginRight: 20,
+    width: 150,
   },
 });

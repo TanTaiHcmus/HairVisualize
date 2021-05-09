@@ -15,7 +15,7 @@ export const LanguageOptions = {
   English: "en",
 };
 
-export const URL_SERVER = "http://157.230.43.147/api/v1";
+export const URL_SERVER = "http://18.140.109.119/api/v1";
 
 export const ACCESS_TOKEN = "ACCESS_TOKEN";
 
@@ -56,3 +56,14 @@ export const PasswordIsEmpty = "Password is empty!";
 export const ConfirmPasswordIsEmpty = "Confirm password is empty!";
 export const ConfirmPasswordIsNotMatch = "Confirm password is not match!";
 export const INVALID_TOKEN_STATUS = 401;
+
+export const SortOptions = {
+  Time: "time",
+  LikeAmount: "like_amount",
+  VisualizeAmount: "visualize_amount",
+};
+
+export const SortOrderOptions = {
+  DESC: "desc",
+  ASC: "asc",
+};

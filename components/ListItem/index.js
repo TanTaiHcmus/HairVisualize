@@ -45,7 +45,12 @@ const ListItem = ({
         data={data}
         showsHorizontalScrollIndicator={isHorizontal && isShowIndicator}
         showsVerticalScrollIndicator={!isHorizontal && isShowIndicator}
-        renderItem={({ item }) => <ItemComponent item={item} />}
+        renderItem={({ item }) => (
+          <ItemComponent
+            item={item}
+            style={!isHorizontal ? Styles.itemVertical : Styles.itemHorizontal}
+          />
+        )}
         keyExtractor={(item) => `${item.id}`}
         onEndReachedThreshold={0.5}
         onEndReached={onScrollEnd}

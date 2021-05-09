@@ -3,13 +3,14 @@ import { Alert, FlatList, View, Image } from "react-native";
 import ButtonGradient from "../../components/ButtonGradient";
 import ImageDisplay from "../../components/ImageDisplay";
 import TextCustom from "../../components/TextCustom";
-import { gradientBackground } from "../../constants";
+import { gradientBackground, Screens, STATUS_MESSAGE } from "../../constants";
 import withTranslate from "../../HOC/withTranslate";
 import Icon from "react-native-vector-icons/Ionicons";
 import { openCamera } from "../../utils/camera";
 import { openGallery } from "../../utils/gallery";
 import Styles from "./style";
 import ModalCustom from "../../components/ModalCustom";
+import { handleVisualize } from "./action";
 
 const HairVisualizeScreen = ({ navigation, translate, route }) => {
   const [oriImage, setOriImage] = useState(null);
@@ -19,17 +20,6 @@ const HairVisualizeScreen = ({ navigation, translate, route }) => {
   const [viewImage, setViewImage] = useState(null);
 
   let flatListRef = useRef(null);
-
-  const handleVisualize = () => {
-    if (!oriImage) {
-      Alert.alert("Origin image is empty!");
-      return;
-    }
-    if (!desImage) {
-      Alert.alert("Destination image is empty!");
-      return;
-    }
-  };
 
   const getData = () => {
     return [
@@ -124,17 +114,25 @@ const HairVisualizeScreen = ({ navigation, translate, route }) => {
     );
   };
 
-  const handlePressButton = () => {
+  const handlePressButton = async () => {
     if (!desImage) {
       Alert.alert(translate("please_upload_des_image"));
       if (flatListRef) {
         flatListRef.scrollToIndex({ animated: true, index: 0 });
       }
-    } else if (!oriImage) {
+      return;
+    }
+
+    if (!oriImage) {
       Alert.alert(translate("please_upload_ori_image"));
       if (flatListRef) {
         flatListRef.scrollToIndex({ animated: true, index: 1 });
       }
+      return;
+    }
+    const response = await handleVisualize(desImage, oriImage);
+    if (response.message === STATUS_MESSAGE.SUCCESS) {
+      navigation.navigate(Screens.History);
     }
   };
 

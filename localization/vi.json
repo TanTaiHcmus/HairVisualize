@@ -46,5 +46,11 @@
     "continue": "Tiếp tục",
     "please_upload_des_image": "Vui lòng tải ảnh đích",
     "please_upload_ori_image": "Vui lòng tải ảnh đầu",
-    "rating": "Đánh giá"
+    "sort": "Sắp xếp:",
+    "time": "Thời gian",
+    "like_amount":"Lượt thích",
+    "visualize_amount": "Lượt giả lập",
+    "desc": "Giảm dần",
+    "asc": "Tăng dần",
+    "order": "Thứ tự:"
 }

@@ -45,5 +45,11 @@
     "continue": "Continue",
     "please_upload_des_image": "Please upload destination image",
     "please_upload_ori_image": "Please upload origin image",
-    "rating": "Rating"
+    "sort": "Sort:",
+    "time": "Time",
+    "like_amount":"Like amount",
+    "visualize_amount": "Visualize amount",
+    "desc": "Descent",
+    "asc": "Ascent",
+    "order": "Order:"
 }
