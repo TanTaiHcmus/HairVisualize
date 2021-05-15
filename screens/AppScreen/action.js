@@ -1,18 +1,14 @@
-import { SET_ACCESS_TOKEN, SET_IS_LOGIN } from "../../redux/actions/Login";
-import { getTokenFromStorage, isEmpty } from "../../utils";
+import { TOKEN } from "../../constants";
+import { SET_IS_LOGIN } from "../../redux/actions/Login";
+import { getTokenFromStorage, isEmpty, checkExpiredToken } from "../../utils";
 
 export const handleValidToken = () => async (dispatch) => {
-  const token = await getTokenFromStorage();
+  const { value: token, expiry } = await getTokenFromStorage(TOKEN.ACCESS_TOKEN);
 
-  if (!isEmpty(token)) {
+  if (!isEmpty(token) && checkExpiredToken(expiry)) {
     dispatch({
       type: SET_IS_LOGIN,
       data: true,
-    });
-
-    dispatch({
-      type: SET_ACCESS_TOKEN,
-      data: token,
     });
   } else {
     dispatch({

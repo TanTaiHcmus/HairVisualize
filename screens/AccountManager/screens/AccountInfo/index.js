@@ -8,7 +8,8 @@ import NavbarItem from "../../../../components/NavbarItem";
 import TextCustom from "../../../../components/TextCustom";
 import { Screens } from "../../../../constants";
 import withTranslate from "../../../../HOC/withTranslate";
-import { getUserInfoFromServer, logout } from "../../action";
+import { handleLogout } from "../../../../utils";
+import { getUserInfoFromServer } from "../../action";
 import ChangeLanguage from "./ChangeLanguage";
 import Styles from "./style";
 
@@ -89,7 +90,11 @@ const AccountInfoScreen = ({
         <TextCustom title={translate("app_info")} style={Styles.navbarTitle} />
       </NavbarItem>
 
-      <NavbarItem onPress={logoutConnect}>
+      <NavbarItem
+        onPress={() => {
+          handleLogout();
+        }}
+      >
         <Icon name="log-out" size={28} style={Styles.icon} />
         <TextCustom title={translate("log_out")} style={Styles.navbarTitle} />
       </NavbarItem>
@@ -107,7 +112,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   getUserInfoConnect: getUserInfoFromServer,
-  logoutConnect: logout,
 };
 
 export default connect(

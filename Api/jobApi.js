@@ -1,7 +1,13 @@
 import Axios from "./axios";
 class JobApi {
-  static createJob = (info) => {
-    return Axios.post("/jobs/", info);
+  static createJob = (params) => {
+    return Axios.post({ url: "/jobs/", params });
+  };
+  static readJobs = (params) => {
+    return Axios.get({ url: "/jobs/", params });
+  };
+  static readJob = (id) => {
+    return Axios.get({ url: `/jobs/${id}` });
   };
 }
 

@@ -1,23 +1,27 @@
 import Axios from "./axios";
 class UserApi {
   static getUserInfo = () => {
-    return Axios.get("/auth/verify");
+    return Axios.get({ url: "/auth/verify" });
   };
 
-  static register = (info) => {
-    return Axios.post("/auth/register", info);
+  static register = (params) => {
+    return Axios.post({ url: "/auth/register", params, checkToken: false });
   };
 
-  static login = (account) => {
-    return Axios.post("/auth/access-token", account);
+  static login = (params) => {
+    return Axios.post({ url: "/auth/access-token", params, checkToken: false });
   };
 
   static getUserId = () => {
-    return Axios.get("/auth/");
+    return Axios.get({ url: "/auth/" });
   };
 
-  static updateInfo = (info) => {
-    return Axios.patch("/users/", info);
+  static updateInfo = (params) => {
+    return Axios.patch({ url: "/users/", params });
+  };
+
+  static logout = () => {
+    return Axios.get({ url: "/auth/revoke" });
   };
 }
 

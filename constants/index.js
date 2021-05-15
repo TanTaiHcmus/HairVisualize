@@ -15,9 +15,12 @@ export const LanguageOptions = {
   English: "en",
 };
 
-export const URL_SERVER = "http://18.140.109.119/api/v1";
+export const URL_SERVER = "http://139.59.116.231/api/v1";
 
-export const ACCESS_TOKEN = "ACCESS_TOKEN";
+export const TOKEN = {
+  ACCESS_TOKEN: "ACCESS_TOKEN",
+  REFRESH_TOKEN: "REFRESH_TOKEN",
+};
 
 export const headerNavigationStyle = {
   headerTintColor: "#fff",
@@ -67,3 +70,7 @@ export const SortOrderOptions = {
   DESC: "desc",
   ASC: "asc",
 };
+
+export const LIMIT_HORIZONTAL_ITEMS = 3;
+
+export const LIMIT_VERTICAL_ITEMS = 6;

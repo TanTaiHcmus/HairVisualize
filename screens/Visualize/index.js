@@ -147,6 +147,7 @@ const HairVisualizeScreen = ({ navigation, translate, route }) => {
         ref={(ref) => {
           flatListRef = ref;
         }}
+        pagingEnabled
       />
 
       <ButtonGradient

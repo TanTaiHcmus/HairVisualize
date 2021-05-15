@@ -35,7 +35,7 @@ const HistoryScreen = ({ translate }) => {
     getDataFromServer();
   }, []);
 
-  const Item = ({ item }) => {
+  const Item = ({ item, style }) => {
     const onPressItemOptions = [
       {
         title: translate("view"),
@@ -52,7 +52,7 @@ const HistoryScreen = ({ translate }) => {
     ];
 
     return (
-      <View style={Styles.item}>
+      <View style={[Styles.item, style]}>
         <ImageDisplay
           image={item.image}
           onPressOptions={onPressItemOptions}

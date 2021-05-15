@@ -23,8 +23,6 @@ export const updateUserInfoToServer = (info) => async (dispatch) => {
         email,
       },
     });
-  } else if (response.data.status === INVALID_TOKEN_STATUS) {
-    handleLogout(dispatch);
   }
 
   return response;
@@ -34,8 +32,13 @@ export const getUserInfoFromServer = () => async (dispatch) => {
   const response = await UserApi.getUserInfo();
 
   if (response.message === STATUS_MESSAGE.SUCCESS) {
-    const { account, display_name: displayName, avatar, email, updated_at } =
-      response.data || {};
+    const {
+      account,
+      display_name: displayName,
+      avatar,
+      email,
+      updated_at,
+    } = response.data || {};
 
     dispatch({
       type: UPDATE_USER_INFO,
@@ -46,13 +49,7 @@ export const getUserInfoFromServer = () => async (dispatch) => {
         email,
       },
     });
-  } else if (response.data.status === INVALID_TOKEN_STATUS) {
-    handleLogout(dispatch);
   }
 
   return response;
-};
-
-export const logout = () => (dispatch) => {
-  handleLogout(dispatch);
 };

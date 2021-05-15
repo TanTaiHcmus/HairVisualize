@@ -2,7 +2,6 @@ import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
   item: {
-    margin: 15,
     borderRadius: 10,
     backgroundColor: "#fff",
     elevation: 5,
@@ -11,10 +10,9 @@ export default StyleSheet.create({
     overflow: "hidden",
   },
   image: {
-    width: 140,
-    aspectRatio: 1,
+    aspectRatio: 3 / 4,
   },
-  itemName: {
-    paddingLeft: 10,
+  infoContainer: {
+    padding: 10,
   },
 });
