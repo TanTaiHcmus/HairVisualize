@@ -15,7 +15,7 @@ export const LanguageOptions = {
   English: "en",
 };
 
-export const URL_SERVER = "http://139.59.116.231/api/v1";
+export const URL_SERVER = "http://175.41.151.101/api/v1";
 
 export const TOKEN = {
   ACCESS_TOKEN: "ACCESS_TOKEN",
@@ -71,6 +71,6 @@ export const SortOrderOptions = {
   ASC: "asc",
 };
 
-export const LIMIT_HORIZONTAL_ITEMS = 3;
+export const LIMIT_HORIZONTAL_ITEMS = 5;
 
-export const LIMIT_VERTICAL_ITEMS = 6;
+export const LIMIT_VERTICAL_ITEMS = 10;

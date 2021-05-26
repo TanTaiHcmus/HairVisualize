@@ -1,57 +1,81 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { View } from "react-native";
+import { connect } from "react-redux";
 import ListItem from "../../../../components/ListItem";
-import { Screens, SortOptions, SortOrderOptions } from "../../../../constants";
+import {
+  LIMIT_HORIZONTAL_ITEMS,
+  LIMIT_VERTICAL_ITEMS,
+  Screens,
+  SortOptions,
+  SortOrderOptions,
+} from "../../../../constants";
 import withTranslate from "../../../../HOC/withTranslate";
-import Item from "../Item";
+import { generateToSortString } from "../../../../utils";
+import { getYourHairStylesFromServer } from "../../action";
 import Sort from "../Sort";
+import Item from "./Item";
 import Styles from "./style";
 
-const YourHairStyles = ({ translate, navigation, isHorizontal }) => {
-  const [data, setData] = useState([]);
-  const [viewImage, setViewImage] = useState(null);
+const YourHairStyles = ({
+  data,
+  getDataFromServerConnect,
+  translate,
+  navigation,
+  isHorizontal,
+}) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [sortType, setSortType] = useState(SortOptions.Time);
-  const [sortOrder, setSortOrder] = useState(SortOrderOptions.DESC);
 
-  const numberItemView = isHorizontal ? 4 : 12;
+  const ref = useRef({
+    page: 0,
+    limit: isHorizontal ? LIMIT_HORIZONTAL_ITEMS : LIMIT_VERTICAL_ITEMS,
+    isEnd: false,
+    sortType: SortOptions.Time,
+    sortOrder: SortOrderOptions.ASC,
+  });
 
   const getDataFromServer = async () => {
+    if (ref.current.isEnd) return;
+    ref.current.page++;
     setIsLoading(true);
-    const result = await new Promise((resolve) => {
-      setTimeout(() => {
-        const fetch =
-          data.length < 15
-            ? new Array(numberItemView).fill().map((item, index) => ({
-                id: index + data.length,
-                name: `${index + data.length}`,
-              }))
-            : [];
-
-        resolve(fetch);
-      }, 1000);
-    });
-    if (result.length > 0) {
-      setData([...data, ...result]);
-    }
+    await getDataFromServerConnect(
+      {
+        page: ref.current.page,
+        limit: ref.current.limit,
+        sort: generateToSortString(ref.current.sortType, ref.current.sortOrder),
+      },
+      () => {
+        ref.current.isEnd = true;
+      }
+    );
     setIsLoading(false);
+  };
+
+  const reload = () => {
+    ref.current.page = 0;
+    ref.current.isEnd = false;
+    getDataFromServer();
   };
 
   useEffect(() => {
     getDataFromServer();
+    navigation.addListener("focus", () => {
+      reload();
+    });
   }, []);
 
   return (
     <View style={Styles.container}>
       {!isHorizontal && (
         <Sort
-          type={sortType}
+          type={ref.current.sortType}
           onTypeChange={(type) => {
-            setSortType(type);
+            ref.current.sortType = type;
+            reload();
           }}
-          order={sortOrder}
+          order={ref.current.sortOrder}
           onOrderChange={(order) => {
-            setSortOrder(order);
+            ref.current.sortOrder = order;
+            reload();
           }}
         />
       )}
@@ -71,4 +95,17 @@ const YourHairStyles = ({ translate, navigation, isHorizontal }) => {
   );
 };
 
-export default withTranslate(YourHairStyles);
+const mapStateToProps = (state) => {
+  return {
+    data: state.hairStyles.yourHairStyles,
+  };
+};
+
+const mapDispatchToProps = {
+  getDataFromServerConnect: getYourHairStylesFromServer,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withTranslate(YourHairStyles));

@@ -21,7 +21,7 @@ class UserApi {
   };
 
   static logout = () => {
-    return Axios.get({ url: "/auth/revoke" });
+    Axios.logout();
   };
 }
 

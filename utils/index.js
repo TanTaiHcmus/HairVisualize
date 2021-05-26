@@ -1,7 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import UserApi from "../Api/userApi";
-import { STATUS_MESSAGE, URL_SERVER } from "../constants";
-import { SET_ACCESS_TOKEN, SET_IS_LOGIN } from "../redux/actions/Login";
+import { SortOptions, SortOrderOptions, URL_SERVER } from "../constants";
+import { SET_IS_LOGIN } from "../redux/actions/Login";
 import store from "../redux/store";
 
 export const isEmpty = (text) => {
@@ -37,20 +36,16 @@ export const getFileFromUri = (uri) => {
 };
 
 export const handleLogout = async () => {
-  const response = await UserApi.logout();
+  const { dispatch } = store;
 
-  if (response.message === STATUS_MESSAGE.SUCCESS) {
-    const { dispatch } = store;
-
-    try {
-      await AsyncStorage.clear();
-      dispatch({
-        type: SET_IS_LOGIN,
-        data: false,
-      });
-    } catch {
-      console.log("Storage error");
-    }
+  try {
+    await AsyncStorage.clear();
+    dispatch({
+      type: SET_IS_LOGIN,
+      data: false,
+    });
+  } catch {
+    console.log("Storage error");
   }
 };
 
@@ -62,4 +57,30 @@ export const checkExpiredToken = (expiry) => {
   const today = new Date();
   const timeExpiredToken = new Date(expiry);
   return timeExpiredToken >= today;
+};
+
+export const generateToSortString = (sortType, sortOrder) => {
+  let result = "";
+
+  switch (sortType) {
+    case SortOptions.Time: {
+      result = "id";
+      break;
+    }
+    case SortOptions.LikeAmount: {
+      result = "num_likes";
+      break;
+    }
+    case SortOptions.VisualizeAmount: {
+      result = "num_simulations";
+      break;
+    }
+    default: {
+      break;
+    }
+  }
+
+  if (sortOrder === SortOrderOptions.DESC) result = "-" + result;
+
+  return result;
 };

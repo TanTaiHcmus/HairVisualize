@@ -8,8 +8,8 @@ import NavbarItem from "../../../../components/NavbarItem";
 import TextCustom from "../../../../components/TextCustom";
 import { Screens } from "../../../../constants";
 import withTranslate from "../../../../HOC/withTranslate";
-import { handleLogout } from "../../../../utils";
 import { getUserInfoFromServer } from "../../action";
+import { handleLogoutToServer } from "./action";
 import ChangeLanguage from "./ChangeLanguage";
 import Styles from "./style";
 
@@ -92,7 +92,7 @@ const AccountInfoScreen = ({
 
       <NavbarItem
         onPress={() => {
-          handleLogout();
+          handleLogoutToServer();
         }}
       >
         <Icon name="log-out" size={28} style={Styles.icon} />

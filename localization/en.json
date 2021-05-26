@@ -36,6 +36,7 @@
     "view": "View",
     "delete": "Delete",
     "share": "Share",
+    "un_share": "Unshare",
     "hair_style_bank": "Hair style bank",
     "visualize": "Visualize",
     "upload_des_image": "Upload destination image",

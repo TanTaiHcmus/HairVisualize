@@ -82,7 +82,7 @@ class Request {
           return callApi();
         }
       } else {
-        handleLogout();
+        this.logout();
         return new Promise((resolve) => {
           resolve({ message: STATUS_MESSAGE.ERROR });
         });
@@ -127,6 +127,13 @@ class Request {
         }),
       checkToken
     );
+  };
+
+  static logout = async () => {
+    const response = await this.get({ url: "/auth/revoke" });
+    if (response.message === STATUS_MESSAGE.SUCCESS) {
+      handleLogout();
+    }
   };
 }
 

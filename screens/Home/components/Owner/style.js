@@ -6,10 +6,14 @@ export default StyleSheet.create({
     alignItems: "center",
     marginBottom: 8,
   },
-  ownerAvatar: {
+  avatarContainer: {
     width: 20,
-    height: 20,
+    borderRadius: 10,
     marginRight: 5,
+    overflow: "hidden",
+  },
+  ownerAvatar: {
+    aspectRatio: 1,
   },
   ownerName: {
     flex: 1,

@@ -1,26 +1,26 @@
 import React from "react";
 import { TouchableOpacity, View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
-import TextCustom from "../../../../../components/TextCustom";
+import TextCustom from "../../../../components/TextCustom";
 import Styles from "./style";
 
-const Interact = ({ isLike, onToggle, like = 0, view = 0 }) => {
+const Interact = ({ isLike, interact, onToggle }) => {
   return (
     <View style={Styles.container}>
-      <View style={Styles.viewContainer}>
-        <TouchableOpacity onPress={onToggle}>
+      <TouchableOpacity onPress={onToggle}>
+        <View style={Styles.viewContainer}>
           <Icon
             name="heart"
             style={isLike ? Styles.like : Styles.dislike}
             size={22}
           />
-        </TouchableOpacity>
-        <TextCustom title={like + isLike} style={Styles.amount} />
-      </View>
+          <TextCustom title={interact.numLikes} style={Styles.amount} />
+        </View>
+      </TouchableOpacity>
 
       <View style={Styles.viewContainer}>
         <Icon name="person" size={18} />
-        <TextCustom title={view} style={Styles.amount} />
+        <TextCustom title={interact.numSimulations} style={Styles.amount} />
       </View>
     </View>
   );

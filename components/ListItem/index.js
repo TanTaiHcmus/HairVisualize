@@ -14,6 +14,7 @@ const ListItem = ({
   onScrollEnd,
   isLoading,
   ItemComponent,
+  onReload,
 }) => {
   const Loading = () => {
     return (
@@ -48,6 +49,7 @@ const ListItem = ({
         renderItem={({ item }) => (
           <ItemComponent
             item={item}
+            onReload={onReload}
             style={!isHorizontal ? Styles.itemVertical : Styles.itemHorizontal}
           />
         )}
