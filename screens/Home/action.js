@@ -35,6 +35,7 @@ export const getYourHairStylesFromServer =
               avatar: addPrefixUrl(item.user.avatar),
             },
             liked: item.liked,
+            isOwn: true,
           })),
         ],
       });
@@ -123,7 +124,7 @@ export const changeItem = (itemInfo) => (dispatch, getState) => {
   }
 };
 
-export const deleteItemInHairStyleBank = (itemInfo) => (dispatch, getState) => {
+export const unshareItem = (itemInfo) => (dispatch, getState) => {
   const data = getState().hairStyles.hairStyleBank;
   dispatch({
     type: SET_HAIR_STYLE_BANK,
@@ -133,14 +134,21 @@ export const deleteItemInHairStyleBank = (itemInfo) => (dispatch, getState) => {
   dispatch(changeItem({ ...itemInfo, public: false }));
 };
 
-export const addItemInHairStyleBank = (item) => (dispatch, getState) => {
-  item.public = true;
-  item.isOwn = true;
-  const data = getState().hairStyles.hairStyleBank;
-  dispatch({
-    type: SET_HAIR_STYLE_BANK,
-    data: [...data, item],
-  });
+export const shareItem = (item) => (dispatch) => {
+  dispatch(changeItem({ ...item, public: true }));
+};
 
-  dispatch(changeItem(item));
+export const deleteItem = (id) => async (dispatch, getState) => {
+  const response = await FileApi.deleteFile(id);
+  if (response.message === STATUS_MESSAGE.SUCCESS) {
+    const { yourHairStyles, hairStyleBank } = getState().hairStyles;
+    dispatch({
+      type: SET_HAIR_STYLE_BANK,
+      data: hairStyleBank.filter((item) => item.id !== id),
+    });
+    dispatch({
+      type: SET_YOUR_HAIR_STYLES,
+      data: yourHairStyles.filter((item) => item.id !== id),
+    });
+  }
 };

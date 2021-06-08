@@ -1,25 +1,27 @@
 import UserApi from "../../Api/userApi";
-import { INVALID_TOKEN_STATUS, STATUS_MESSAGE } from "../../constants";
+import { STATUS_MESSAGE } from "../../constants";
 import { UPDATE_USER_INFO } from "../../redux/actions/User";
-import { addPrefixUrl, handleLogout, isEmpty } from "../../utils";
+import { addPrefixUrl, isEmpty } from "../../utils";
 
 export const updateUserInfoToServer = (info) => async (dispatch) => {
   const response = await UserApi.updateInfo(info);
 
   if (response.message === STATUS_MESSAGE.SUCCESS) {
     const {
-      account,
       display_name: displayName,
       avatar,
       email,
       updated_at,
     } = response.data;
+    const customAvatar = !isEmpty(avatar)
+      ? `${addPrefixUrl(avatar)}?${updated_at}`
+      : "";
+
     dispatch({
       type: UPDATE_USER_INFO,
       data: {
-        account,
         displayName,
-        avatar: !isEmpty(avatar) ? `${addPrefixUrl(avatar)}?${updated_at}` : "",
+        avatar: customAvatar,
         email,
       },
     });
@@ -33,6 +35,7 @@ export const getUserInfoFromServer = () => async (dispatch) => {
 
   if (response.message === STATUS_MESSAGE.SUCCESS) {
     const {
+      id,
       account,
       display_name: displayName,
       avatar,
@@ -43,6 +46,7 @@ export const getUserInfoFromServer = () => async (dispatch) => {
     dispatch({
       type: UPDATE_USER_INFO,
       data: {
+        id,
         account,
         displayName,
         avatar: !isEmpty(avatar) ? `${addPrefixUrl(avatar)}?${updated_at}` : "",

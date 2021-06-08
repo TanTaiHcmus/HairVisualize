@@ -63,15 +63,15 @@ export const generateToSortString = (sortType, sortOrder) => {
   let result = "";
 
   switch (sortType) {
-    case SortOptions.Time: {
+    case SortOptions.Time.id: {
       result = "id";
       break;
     }
-    case SortOptions.LikeAmount: {
+    case SortOptions.LikeAmount.id: {
       result = "num_likes";
       break;
     }
-    case SortOptions.VisualizeAmount: {
+    case SortOptions.VisualizeAmount.id: {
       result = "num_simulations";
       break;
     }
@@ -80,7 +80,15 @@ export const generateToSortString = (sortType, sortOrder) => {
     }
   }
 
-  if (sortOrder === SortOrderOptions.DESC) result = "-" + result;
+  if (sortOrder === SortOrderOptions.DESC.id) result = "-" + result;
 
   return result;
+};
+
+export const getTextFromIdObject = (id, object) => {
+  return Object.values(object).find((item) => item.id === id).text;
+};
+
+export const generateOptionsFromObject = (object) => {
+  return Object.values(object);
 };

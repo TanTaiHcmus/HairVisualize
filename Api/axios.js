@@ -1,6 +1,6 @@
 import axios from "axios";
 import FormData from "form-data";
-import { STATUS_MESSAGE, TOKEN, URL_SERVER } from "../constants";
+import { STATUS_MESSAGE, TOKEN, URL_SERVER, WebSocketUrl } from "../constants";
 import {
   getTokenFromStorage,
   isEmpty,
@@ -129,11 +129,43 @@ class Request {
     );
   };
 
+  static put = ({ url, params = {}, checkToken = true }) => {
+    return this.callApiWithCheckToken(
+      () =>
+        Axios({
+          method: "put",
+          url,
+          params,
+        }),
+      checkToken
+    );
+  };
+
+  static delete = ({ url, params = {}, checkToken = true }) => {
+    return this.callApiWithCheckToken(
+      () =>
+        Axios({
+          method: "delete",
+          url,
+          params,
+        }),
+      checkToken
+    );
+  };
+
   static logout = async () => {
     const response = await this.get({ url: "/auth/revoke" });
     if (response.message === STATUS_MESSAGE.SUCCESS) {
       handleLogout();
     }
+  };
+
+  static createWebSocket = () => {
+    return this.callApiWithCheckToken(async () => {
+      const { value: token } = await getTokenFromStorage(TOKEN.ACCESS_TOKEN);
+      const ws = new WebSocket(WebSocketUrl + token);
+      return ws;
+    }, true);
   };
 }
 

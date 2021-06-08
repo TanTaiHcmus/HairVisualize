@@ -9,6 +9,11 @@ class JobApi {
   static readJob = (id) => {
     return Axios.get({ url: `/jobs/${id}` });
   };
+  static deleteJob = (id) => {
+    return Axios.delete({
+      url: `/jobs/${id}`,
+    });
+  };
 }
 
 export default JobApi;

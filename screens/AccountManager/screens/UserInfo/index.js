@@ -1,10 +1,11 @@
-import React, { useState } from "react";
-import { Alert, ScrollView, View, Image } from "react-native";
+import React, { useState, useRef } from "react";
+import { Alert, Image, TouchableOpacity, View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { connect } from "react-redux";
-import ScrollContainer from "../../../../components/ScrollContainer";
 import ImageDisplay from "../../../../components/ImageDisplay";
 import ModalCustom from "../../../../components/ModalCustom";
+import OptionsPopup from "../../../../components/OptionsPopup";
+import ScrollContainer from "../../../../components/ScrollContainer";
 import TextCustom from "../../../../components/TextCustom";
 import {
   EditUserInfoOptions,
@@ -12,7 +13,7 @@ import {
   STATUS_MESSAGE,
 } from "../../../../constants";
 import withTranslate from "../../../../HOC/withTranslate";
-import { getFileFromUri } from "../../../../utils";
+import { getFileFromUri, isEmpty } from "../../../../utils";
 import { openGallery } from "../../../../utils/gallery";
 import { updateUserInfoToServer } from "../../action";
 import InfoFrame from "./InfoFrame";
@@ -29,6 +30,8 @@ const UserInfoScreen = ({
   email,
 }) => {
   const [isShowAvatarPopup, setIsShowAvatarPopup] = useState(false);
+  const [isShowImageOptions, setIsShowImageOptions] = useState(false);
+  const ref = useRef({ imageLoaded: false });
 
   const handleChangeAvatar = async () => {
     const result = await openGallery([1, 1]);
@@ -44,17 +47,29 @@ const UserInfoScreen = ({
   };
 
   const onPressAvatarOptions = [
-    {
-      title: translate("view_avatar"),
-      onPress: () => {
-        setIsShowAvatarPopup(true);
-      },
-    },
+    ...(!isEmpty(avatar)
+      ? [
+          {
+            title: translate("view_avatar"),
+            onPress: () => {
+              setIsShowAvatarPopup(true);
+            },
+          },
+        ]
+      : []),
     {
       title: translate("change_avatar"),
       onPress: handleChangeAvatar,
     },
   ];
+
+  const handleImageOptionsExit = () => {
+    setIsShowImageOptions(false);
+  };
+
+  const handleImagePress = async () => {
+    if (ref.current.imageLoaded) setIsShowImageOptions(true);
+  };
 
   const defaultImage =
     "https://raw.githubusercontent.com/TanTaiHcmus/HairVisualize/master/Images/avatar.png";
@@ -64,14 +79,19 @@ const UserInfoScreen = ({
       <ScrollContainer>
         <View style={Styles.infoHeader}>
           <View style={Styles.avatarControl}>
-            <View style={Styles.avatarContainer}>
+            <TouchableOpacity
+              style={Styles.avatarContainer}
+              onPress={handleImagePress}
+            >
               <ImageDisplay
                 image={avatar}
                 defaultImage={defaultImage}
-                onPressOptions={onPressAvatarOptions}
+                onImageLoaded={() => {
+                  ref.current.imageLoaded = true;
+                }}
                 style={Styles.avatar}
               />
-            </View>
+            </TouchableOpacity>
 
             <Icon
               name="camera-reverse-outline"
@@ -139,6 +159,13 @@ const UserInfoScreen = ({
               resizeMode="stretch"
             />
           </ModalCustom>
+        )}
+        {isShowImageOptions && (
+          <OptionsPopup
+            title={translate("select_image_options")}
+            options={onPressAvatarOptions}
+            onExit={handleImageOptionsExit}
+          />
         )}
       </ScrollContainer>
     </View>

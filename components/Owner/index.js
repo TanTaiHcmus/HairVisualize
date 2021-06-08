@@ -1,7 +1,7 @@
 import React from "react";
 import { View } from "react-native";
-import ImageDisplay from "../../../../components/ImageDisplay";
-import TextCustom from "../../../../components/TextCustom";
+import ImageDisplay from "../ImageDisplay";
+import TextCustom from "../TextCustom";
 import Styles from "./style";
 
 const Owner = ({ own }) => {

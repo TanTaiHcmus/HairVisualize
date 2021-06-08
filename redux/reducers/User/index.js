@@ -1,6 +1,7 @@
 import { UPDATE_USER_INFO } from "../../actions/User";
 
 const initialState = {
+  id: null,
   account: "",
   displayName: "",
   email: "",

@@ -19,13 +19,14 @@ export default StyleSheet.create({
     alignItems: "center",
   },
   containerVertical: {
-    alignItems: "center",
+    paddingBottom: 200,
   },
   loadingContainer: {
     width: 30,
     height: 30,
     justifyContent: "center",
     alignItems: "center",
+    alignSelf: "center",
   },
   itemVertical: {
     margin: 15,

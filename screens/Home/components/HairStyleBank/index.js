@@ -1,7 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import { View } from "react-native";
 import { connect } from "react-redux";
+import ControlPopup from "../../../../components/ControlPopup";
+import Item from "../../../../components/Item";
 import ListItem from "../../../../components/ListItem";
+import Select from "../../../../components/Select";
 import {
   LIMIT_HORIZONTAL_ITEMS,
   LIMIT_VERTICAL_ITEMS,
@@ -11,25 +14,38 @@ import {
 } from "../../../../constants";
 import withTranslate from "../../../../HOC/withTranslate";
 import { generateToSortString } from "../../../../utils";
-import { getHairStyleBankFromServer, getUserId } from "../../action";
-import Sort from "../Sort";
-import Item from "./Item";
+import {
+  changeItem,
+  deleteItem,
+  getHairStyleBankFromServer,
+  getUserId,
+  unshareItem,
+} from "../../action";
 import Styles from "./style";
+
+const PopupStatus = {
+  SortType: 1,
+  SortOrder: 2,
+};
 
 const HairStyleBank = ({
   data,
   getDataFromServerConnect,
+  changeItemConnect,
+  unshareItemConnect,
+  deleteItemConnect,
   translate,
   navigation,
   isHorizontal,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [popupStatus, setPopupStatus] = useState(null);
   const ref = useRef({
     page: 0,
     limit: isHorizontal ? LIMIT_HORIZONTAL_ITEMS : LIMIT_VERTICAL_ITEMS,
     isEnd: false,
-    sortType: SortOptions.Time,
-    sortOrder: SortOrderOptions.ASC,
+    sortType: SortOptions.Time.id,
+    sortOrder: SortOrderOptions.ASC.id,
   });
 
   const handleReadDataEnd = () => {
@@ -64,13 +80,27 @@ const HairStyleBank = ({
     getDataFromServer();
   };
 
+  const handleItemToggleLike = (item) => {
+    changeItemConnect(item);
+  };
+
+  const handleToggleMarkPublic = (item) => {
+    unshareItemConnect(item);
+  };
+
+  const handleDeleteItem = (id) => {
+    deleteItemConnect(id);
+  };
+
   useEffect(() => {
     const init = async () => {
       const response = await getUserId();
       if (response) {
         ref.current.userId = response.id;
       }
-      getDataFromServer();
+
+      reload();
+
       navigation.addListener("focus", () => {
         reload();
       });
@@ -82,18 +112,45 @@ const HairStyleBank = ({
   return (
     <View style={Styles.container}>
       {!isHorizontal && (
-        <Sort
-          type={ref.current.sortType}
-          onTypeChange={(type) => {
-            ref.current.sortType = type;
-            reload();
+        <ControlPopup
+          haveOptionsPopup={popupStatus}
+          closeOptionsPopup={() => {
+            setPopupStatus(null);
           }}
-          order={ref.current.sortOrder}
-          onOrderChange={(order) => {
-            ref.current.sortOrder = order;
-            reload();
-          }}
-        />
+        >
+          <View style={Styles.filterContainer}>
+            <Select
+              value={ref.current.sortType}
+              iconName="filter"
+              options={SortOptions}
+              isShowOptionsPopup={popupStatus === PopupStatus.SortType}
+              setShowOptionsPopup={(value) => {
+                setPopupStatus(value ? PopupStatus.SortType : null);
+              }}
+              onChange={(value) => {
+                ref.current.sortType = value;
+                reload();
+              }}
+            />
+            <Select
+              value={ref.current.sortOrder}
+              iconName={
+                ref.current.sortOrder === SortOrderOptions.ASC.id
+                  ? "caret-up"
+                  : "caret-down"
+              }
+              isShowOptionsPopup={popupStatus === PopupStatus.SortOrder}
+              setShowOptionsPopup={(value) => {
+                setPopupStatus(value ? PopupStatus.SortOrder : null);
+              }}
+              options={SortOrderOptions}
+              onChange={(value) => {
+                ref.current.sortOrder = value;
+                reload();
+              }}
+            />
+          </View>
+        </ControlPopup>
       )}
 
       <ListItem
@@ -106,6 +163,9 @@ const HairStyleBank = ({
         onScrollEnd={getDataFromServer}
         isLoading={isLoading}
         ItemComponent={Item}
+        handleItemToggleLike={handleItemToggleLike}
+        handleToggleMarkPublic={handleToggleMarkPublic}
+        handleDeleteItem={handleDeleteItem}
       />
     </View>
   );
@@ -119,6 +179,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   getDataFromServerConnect: getHairStyleBankFromServer,
+  changeItemConnect: changeItem,
+  unshareItemConnect: unshareItem,
+  deleteItemConnect: deleteItem,
 };
 
 export default connect(

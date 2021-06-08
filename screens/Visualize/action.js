@@ -1,4 +1,5 @@
 import JobApi from "../../Api/jobApi";
+import { STATUS_MESSAGE } from "../../constants";
 import { getFileFromUri } from "../../utils";
 
 export const handleVisualize = async (des, ori) => {
@@ -7,5 +8,9 @@ export const handleVisualize = async (des, ori) => {
     file_origin: getFileFromUri(ori),
   });
 
-  return response;
+  if (response.message === STATUS_MESSAGE.SUCCESS) {
+    return response.data;
+  }
+
+  return null;
 };

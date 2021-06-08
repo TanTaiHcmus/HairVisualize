@@ -14,7 +14,9 @@ const ListItem = ({
   onScrollEnd,
   isLoading,
   ItemComponent,
-  onReload,
+  handleItemToggleLike,
+  handleToggleMarkPublic,
+  handleDeleteItem,
 }) => {
   const Loading = () => {
     return (
@@ -49,10 +51,13 @@ const ListItem = ({
         renderItem={({ item }) => (
           <ItemComponent
             item={item}
-            onReload={onReload}
+            handleItemToggleLike={handleItemToggleLike}
+            handleToggleMarkPublic={handleToggleMarkPublic}
+            handleDeleteItem={handleDeleteItem}
             style={!isHorizontal ? Styles.itemVertical : Styles.itemHorizontal}
           />
         )}
+        removeClippedSubviews
         keyExtractor={(item) => `${item.id}`}
         onEndReachedThreshold={0.5}
         onEndReached={onScrollEnd}
@@ -66,4 +71,4 @@ const ListItem = ({
   );
 };
 
-export default withTranslate(ListItem);
+export default React.memo(withTranslate(ListItem));

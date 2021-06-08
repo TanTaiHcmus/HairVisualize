@@ -1,4 +1,5 @@
 import {
+  SET_HAIR_LIKES,
   SET_HAIR_STYLE_BANK,
   SET_YOUR_HAIR_STYLES,
 } from "../../actions/HairStyles";
@@ -6,6 +7,7 @@ import {
 const initialState = {
   yourHairStyles: [],
   hairStyleBank: [],
+  hairLikes: [],
 };
 
 const HairStylesReducer = (state = initialState, action) => {
@@ -20,6 +22,12 @@ const HairStylesReducer = (state = initialState, action) => {
       return {
         ...state,
         hairStyleBank: [...action.data],
+      };
+    }
+    case SET_HAIR_LIKES: {
+      return {
+        ...state,
+        hairLikes: [...action.data],
       };
     }
     default: {

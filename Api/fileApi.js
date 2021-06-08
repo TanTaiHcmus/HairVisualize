@@ -24,6 +24,17 @@ class FileApi {
       params: { is_liked },
     });
   };
+  static deleteFile = (id) => {
+    return Axios.delete({
+      url: `/files/${id}`,
+    });
+  };
+  static getHairLikes = (params) => {
+    return Axios.get({
+      url: "/files/like/",
+      params,
+    });
+  };
 }
 
 export default FileApi;

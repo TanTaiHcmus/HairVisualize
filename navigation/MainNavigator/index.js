@@ -19,6 +19,8 @@ import YourHairStylesScreen from "../../screens/Home/components/YourHairStyles";
 import HeaderBackground from "../components/HeaderBackground";
 import TabBar from "../components/TabBar";
 import HairVisualizeScreen from "../../screens/Visualize";
+import HairLikesScreen from "../../screens/AccountManager/screens/HairLikes";
+import ResultInfoScreen from "../../screens/ResultInfo";
 
 function getRouteName(route) {
   return getFocusedRouteNameFromRoute(route) || Screens.Home;
@@ -103,6 +105,16 @@ const MainStackNavigator = ({ translate }) => {
           name={Screens.HairVisualize}
           component={HairVisualizeScreen}
           options={{ headerTitle: translate(Screens.HairVisualize) }}
+        />
+        <MainStack.Screen
+          name={Screens.HairLikes}
+          component={HairLikesScreen}
+          options={{ headerTitle: translate(Screens.HairLikes) }}
+        />
+        <MainStack.Screen
+          name={Screens.ResultInfo}
+          component={ResultInfoScreen}
+          options={{ headerTitle: translate(Screens.ResultInfo) }}
         />
       </MainStack.Navigator>
     </NavigationContainer>

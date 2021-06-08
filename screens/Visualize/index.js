@@ -1,19 +1,22 @@
-import React, { useState, useRef } from "react";
-import { Alert, FlatList, View, Image } from "react-native";
+import React, { useRef, useState, memo } from "react";
+import { Alert, FlatList, Image, TouchableOpacity, View } from "react-native";
+import Icon from "react-native-vector-icons/Ionicons";
 import ButtonGradient from "../../components/ButtonGradient";
 import ImageDisplay from "../../components/ImageDisplay";
+import ModalCustom from "../../components/ModalCustom";
+import OptionsPopup from "../../components/OptionsPopup";
 import TextCustom from "../../components/TextCustom";
-import { gradientBackground, Screens, STATUS_MESSAGE } from "../../constants";
+import { gradientBackground, Screens } from "../../constants";
 import withTranslate from "../../HOC/withTranslate";
-import Icon from "react-native-vector-icons/Ionicons";
 import { openCamera } from "../../utils/camera";
 import { openGallery } from "../../utils/gallery";
-import Styles from "./style";
-import ModalCustom from "../../components/ModalCustom";
 import { handleVisualize } from "./action";
+import Styles from "./style";
 
 const HairVisualizeScreen = ({ navigation, translate, route }) => {
-  const [oriImage, setOriImage] = useState(null);
+  const [oriImage, setOriImage] = useState(
+    route.params ? route.params.oriImage : null
+  );
   const [desImage, setDesImage] = useState(
     route.params ? route.params.desImage : null
   );
@@ -28,7 +31,18 @@ const HairVisualizeScreen = ({ navigation, translate, route }) => {
     ];
   };
 
-  const Item = ({ item }) => {
+  const Item = memo(({ item }) => {
+    const [isShowImageOptions, setIsShowImageOptions] = useState(false);
+    const ref = useRef({ imageLoaded: false });
+
+    const handleImageOptionsExit = () => {
+      setIsShowImageOptions(false);
+    };
+
+    const handleImagePress = async () => {
+      if (ref.current.imageLoaded) setIsShowImageOptions(true);
+    };
+
     const handleImageChange = (value, id) => {
       switch (id) {
         case "des": {
@@ -77,42 +91,56 @@ const HairVisualizeScreen = ({ navigation, translate, route }) => {
     ];
 
     return (
-      <View style={Styles.itemContainer}>
-        <View style={Styles.headerContainer}>
-          <TextCustom
-            title={translate(
-              item.id === "des" ? "upload_des_image" : "upload_ori_image"
-            )}
-            style={Styles.titleImage}
-          />
-          <Icon
-            name={item.id === "des" ? "chevron-forward" : "chevron-back"}
-            size={35}
-            style={[
-              Styles.icon,
-              item.id === "des" ? Styles.rightIcon : Styles.leftIcon,
-            ]}
-            onPress={() => {
-              if (flatListRef) {
-                flatListRef.scrollToIndex({
-                  animated: true,
-                  index: item.id === "des" ? 1 : 0,
-                });
-              }
-            }}
-          />
-        </View>
+      <View>
+        <TouchableOpacity
+          style={Styles.itemContainer}
+          onPress={handleImagePress}
+        >
+          <View style={Styles.headerContainer}>
+            <TextCustom
+              title={translate(
+                item.id === "des" ? "upload_des_image" : "upload_ori_image"
+              )}
+              style={Styles.titleImage}
+            />
+            <Icon
+              name={item.id === "des" ? "chevron-forward" : "chevron-back"}
+              size={35}
+              style={[
+                Styles.icon,
+                item.id === "des" ? Styles.rightIcon : Styles.leftIcon,
+              ]}
+              onPress={() => {
+                if (flatListRef) {
+                  flatListRef.scrollToIndex({
+                    animated: true,
+                    index: item.id === "des" ? 1 : 0,
+                  });
+                }
+              }}
+            />
+          </View>
 
-        <View style={Styles.imageContainer}>
-          <ImageDisplay
-            image={item.image}
-            onPressOptions={onPressOptions}
-            style={Styles.image}
+          <View style={Styles.imageContainer}>
+            <ImageDisplay
+              image={item.image}
+              onImageLoaded={() => {
+                ref.current.imageLoaded = true;
+              }}
+              style={Styles.image}
+            />
+          </View>
+        </TouchableOpacity>
+        {isShowImageOptions && (
+          <OptionsPopup
+            title={translate("select_image_options")}
+            options={onPressOptions}
+            onExit={handleImageOptionsExit}
           />
-        </View>
+        )}
       </View>
     );
-  };
+  });
 
   const handlePressButton = async () => {
     if (!desImage) {
@@ -131,7 +159,7 @@ const HairVisualizeScreen = ({ navigation, translate, route }) => {
       return;
     }
     const response = await handleVisualize(desImage, oriImage);
-    if (response.message === STATUS_MESSAGE.SUCCESS) {
+    if (response) {
       navigation.navigate(Screens.History);
     }
   };

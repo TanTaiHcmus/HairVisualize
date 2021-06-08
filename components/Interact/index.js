@@ -1,7 +1,7 @@
 import React from "react";
 import { TouchableOpacity, View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
-import TextCustom from "../../../../components/TextCustom";
+import TextCustom from "../TextCustom";
 import Styles from "./style";
 
 const Interact = ({ isLike, interact, onToggle }) => {

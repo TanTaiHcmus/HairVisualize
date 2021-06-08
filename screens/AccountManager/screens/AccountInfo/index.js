@@ -17,7 +17,6 @@ const AccountInfoScreen = ({
   translate,
   navigation,
   getUserInfoConnect,
-  logoutConnect,
   account,
   displayName,
   avatar,
@@ -68,6 +67,18 @@ const AccountInfoScreen = ({
       >
         <Icon name="time" size={26} style={Styles.icon} />
         <TextCustom title={translate("history")} style={Styles.navbarTitle} />
+      </NavbarItem>
+
+      <NavbarItem
+        onPress={() => {
+          navigation.navigate(Screens.HairLikes);
+        }}
+      >
+        <Icon name="heart" size={25} style={Styles.icon} />
+        <TextCustom
+          title={translate("hair_likes")}
+          style={Styles.navbarTitle}
+        />
       </NavbarItem>
 
       <ChangeLanguage translate={translate} />
