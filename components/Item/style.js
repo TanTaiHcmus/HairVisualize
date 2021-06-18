@@ -15,4 +15,18 @@ export default StyleSheet.create({
   infoContainer: {
     padding: 10,
   },
+  checkIcon: {
+    position: "absolute",
+    alignSelf: "flex-end",
+    width: 30,
+    height: 30,
+    backgroundColor: "#e253a0",
+    borderTopRightRadius: 10,
+    borderBottomLeftRadius: 10,
+    textAlign: "center",
+  },
+  createAtText: {
+    marginBottom: 8,
+    fontSize: 15,
+  },
 });

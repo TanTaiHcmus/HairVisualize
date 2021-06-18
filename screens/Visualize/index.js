@@ -1,4 +1,4 @@
-import React, { useRef, useState, memo } from "react";
+import React, { memo, useRef, useState } from "react";
 import { Alert, FlatList, Image, TouchableOpacity, View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import ButtonGradient from "../../components/ButtonGradient";

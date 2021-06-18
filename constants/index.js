@@ -125,7 +125,60 @@ export const JobStatus = {
   },
 };
 
+export const FileTypeOptions = {
+  ALL: {
+    id: 0,
+    text: "all",
+  },
+  ORIGIN: {
+    id: 1,
+    text: "ori",
+  },
+  EXAMPLE: {
+    id: 2,
+    text: "des",
+  },
+  RESULT: {
+    id: 3,
+    text: "result",
+  },
+  EXTRACTING: {
+    id: 4,
+    text: "extracting",
+  },
+};
+
 export const Signal_Type = {
   SERVER_UPDATE: 1,
   CLIENT_UPDATE: 2,
+};
+
+export const GenderOptions = {
+  ALL: {
+    id: 0,
+    text: "all",
+  },
+  MALE: {
+    id: 1,
+    text: "male",
+  },
+  FEMALE: {
+    id: 2,
+    text: "female",
+  },
+};
+
+export const StyleOptions = {
+  ALL: {
+    id: 0,
+    text: "all",
+  },
+  SHORT: {
+    id: 1,
+    text: "short",
+  },
+  LONG: {
+    id: 2,
+    text: "long",
+  },
 };

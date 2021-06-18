@@ -29,6 +29,7 @@ export const getHairLikesFromServer =
               displayName: item.user.display_name,
               avatar: addPrefixUrl(item.user.avatar),
             },
+            created_at: item.created_at,
             public: item.public,
             liked: item.liked,
             isOwn: id === item.user.id,
@@ -50,13 +51,13 @@ export const changeItem = (itemInfo) => (dispatch, getState) => {
   }
 };
 
-export const deleteItem = (id) => async (dispatch, getState) => {
-  const response = await FileApi.deleteFile(id);
+export const deleteItems = (ids) => async (dispatch, getState) => {
+  const response = await FileApi.deleteFiles(JSON.stringify({ file_ids: ids }));
   if (response.message === STATUS_MESSAGE.SUCCESS) {
     const { hairLikes } = getState().hairStyles;
     dispatch({
       type: SET_HAIR_LIKES,
-      data: hairLikes.filter((item) => item.id !== id),
+      data: hairLikes.filter((item) => !ids.includes(item.id)),
     });
   }
 };

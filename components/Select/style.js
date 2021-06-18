@@ -2,8 +2,8 @@ import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
   container: {
-    marginHorizontal: 15,
-    marginBottom: 15,
+    marginBottom: 30,
+    zIndex: 10,
   },
   valueContainer: {
     padding: 15,
@@ -19,14 +19,10 @@ export default StyleSheet.create({
     flex: 1,
   },
   optionsContainer: {
-    position: "absolute",
-    width: "100%",
-    left: 0,
-    top: 5,
+    marginHorizontal: 15,
     borderWidth: 1,
     borderRadius: 5,
-    backgroundColor: "#fff",
-    zIndex: 10,
+    marginTop: 15,
   },
   option: {
     padding: 15,

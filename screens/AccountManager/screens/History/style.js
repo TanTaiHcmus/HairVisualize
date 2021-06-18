@@ -5,8 +5,13 @@ export default StyleSheet.create({
     backgroundColor: "#fff",
     flex: 1,
   },
-  filterContainer: {
-    marginTop: 15,
+  headerButtonContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  headerButton: {
+    color: "#fff",
+    paddingHorizontal: 8,
   },
   item: {
     borderRadius: 10,
@@ -53,5 +58,18 @@ export default StyleSheet.create({
   },
   tabActive: {
     borderBottomWidth: 1,
+  },
+  createdAtText: {
+    fontSize: 15,
+  },
+  checkIcon: {
+    position: "absolute",
+    alignSelf: "flex-end",
+    width: 30,
+    height: 30,
+    backgroundColor: "#e253a0",
+    borderTopRightRadius: 10,
+    borderBottomLeftRadius: 10,
+    textAlign: "center",
   },
 });

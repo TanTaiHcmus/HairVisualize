@@ -11,21 +11,23 @@ export default function withTranslate(Component) {
     };
   };
 
-  return connect(mapStateToProps)(({ currentLanguage, ...props }) => {
-    const translate = (value) => {
-      switch (currentLanguage) {
-        case LanguageOptions.Vietnamese: {
-          return Vi[value];
+  return React.memo(
+    connect(mapStateToProps)(({ currentLanguage, ...props }) => {
+      const translate = (value) => {
+        switch (currentLanguage) {
+          case LanguageOptions.Vietnamese: {
+            return Vi[value];
+          }
+          case LanguageOptions.English: {
+            return En[value];
+          }
+          default: {
+            return "";
+          }
         }
-        case LanguageOptions.English: {
-          return En[value];
-        }
-        default: {
-          return "";
-        }
-      }
-    };
+      };
 
-    return <Component translate={translate} {...props} />;
-  });
+      return <Component translate={translate} {...props} />;
+    })
+  );
 }

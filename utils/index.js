@@ -92,3 +92,11 @@ export const getTextFromIdObject = (id, object) => {
 export const generateOptionsFromObject = (object) => {
   return Object.values(object);
 };
+
+export const convertObjectToFormData = (params) => {
+  const data = new FormData();
+  Object.keys(params).forEach((key) => {
+    data.append(key, params[key]);
+  });
+  return data;
+};

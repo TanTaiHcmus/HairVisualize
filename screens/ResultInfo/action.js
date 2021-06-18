@@ -6,9 +6,15 @@ export const getJobInfoFromServer = async (id) => {
   const response = await JobApi.readJob(id);
   if (response.message === STATUS_MESSAGE.SUCCESS) {
     return {
-      oriImage: addPrefixUrl(response.data.file_origin.uri),
-      desImage: addPrefixUrl(response.data.file_example.uri),
-      resultImage: addPrefixUrl(response.data.file_result.uri),
+      oriImage: response.data.file_origin
+        ? addPrefixUrl(response.data.file_origin.uri)
+        : null,
+      desImage: response.data.file_example
+        ? addPrefixUrl(response.data.file_example.uri)
+        : null,
+      resultImage: response.data.file_result
+        ? addPrefixUrl(response.data.file_result.uri)
+        : null,
     };
   }
   return null;

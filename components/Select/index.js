@@ -1,9 +1,14 @@
-import React from "react";
+import React, { memo } from "react";
 import { TouchableOpacity, View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import withTranslate from "../../HOC/withTranslate";
-import { generateOptionsFromObject, getTextFromIdObject } from "../../utils";
+import {
+  generateOptionsFromObject,
+  getTextFromIdObject,
+  isEmpty,
+} from "../../utils";
 import TextCustom from "../TextCustom";
+import TextInputCustom from "../TextInputCustom";
 import Styles from "./style";
 
 const Select = ({
@@ -13,6 +18,7 @@ const Select = ({
   onChange,
   isShowOptionsPopup,
   setShowOptionsPopup,
+  placeholder,
   translate,
 }) => {
   const optionsPopup = generateOptionsFromObject(options);
@@ -26,9 +32,15 @@ const Select = ({
         style={Styles.valueContainer}
       >
         <Icon name={iconName} size={22} style={Styles.icon} />
-        <TextCustom
-          title={translate(getTextFromIdObject(value, options))}
+        <TextInputCustom
+          value={
+            !isEmpty(value) && !isShowOptionsPopup
+              ? translate(getTextFromIdObject(value, options))
+              : null
+          }
           style={Styles.text}
+          editable={false}
+          placeholder={placeholder}
         />
         <Icon
           name={!isShowOptionsPopup ? "chevron-up" : "chevron-down"}
@@ -63,4 +75,4 @@ const Select = ({
   );
 };
 
-export default withTranslate(Select);
+export default memo(withTranslate(Select));

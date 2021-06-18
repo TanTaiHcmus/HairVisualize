@@ -27,9 +27,10 @@ export default StyleSheet.create({
     marginTop: 50,
     marginBottom: 30,
     justifyContent: "center",
+    paddingHorizontal: 50,
   },
   titleImage: {
-    fontSize: 20,
+    fontSize: 18,
   },
   imageContainer: {
     width: "100%",
@@ -51,9 +52,9 @@ export default StyleSheet.create({
     color: "#e253a0",
   },
   leftIcon: {
-    left: -35,
+    left: 0,
   },
   rightIcon: {
-    right: -35,
+    right: 0,
   },
 });

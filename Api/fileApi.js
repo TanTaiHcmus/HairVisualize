@@ -12,10 +12,10 @@ class FileApi {
       params,
     });
   };
-  static markPublicFile = (id, status) => {
-    return Axios.get({
-      url: `/files/mark_public/${id}`,
-      params: { status },
+  static markPublicFile = (data) => {
+    return Axios.put({
+      url: "files/mark_public",
+      data,
     });
   };
   static markFileLiked = (id, is_liked) => {
@@ -29,10 +29,21 @@ class FileApi {
       url: `/files/${id}`,
     });
   };
+  static deleteFiles = (data) => {
+    return Axios.put({
+      url: "files/delete/",
+      data,
+    });
+  };
   static getHairLikes = (params) => {
     return Axios.get({
       url: "/files/like/",
       params,
+    });
+  };
+  static downloadFiles = (params) => {
+    return Axios.get({
+      url: "files/batch-download/?" + params,
     });
   };
 }

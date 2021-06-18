@@ -1,14 +1,20 @@
 import FileApi from "../../Api/fileApi";
 import UserApi from "../../Api/userApi";
 import { STATUS_MESSAGE } from "../../constants";
+import FileSystem from "expo-file-system";
+import JSZip from "jszip";
 import {
   SET_HAIR_STYLE_BANK,
   SET_YOUR_HAIR_STYLES,
 } from "../../redux/actions/HairStyles";
-import { addPrefixUrl } from "../../utils";
+import { addPrefixUrl, convertObjectToFormData } from "../../utils";
 
 export const getYourHairStylesFromServer =
   (params, onEnd) => async (dispatch, getState) => {
+    if (!params.filter.style) delete params.filter.style;
+    if (!params.filter.gender) delete params.filter.gender;
+    if (!params.filter.file_type) delete params.filter.file_type;
+    if (Object.keys(params.filter).length === 0) delete params.filter;
     const response = await FileApi.getYourHairStyles(params);
     if (response.message === STATUS_MESSAGE.SUCCESS) {
       const { items } = response.data;
@@ -34,7 +40,10 @@ export const getYourHairStylesFromServer =
               displayName: item.user.display_name,
               avatar: addPrefixUrl(item.user.avatar),
             },
+            created_at: item.created_at,
             liked: item.liked,
+            style: item.style,
+            gender: item.gender,
             isOwn: true,
           })),
         ],
@@ -44,6 +53,10 @@ export const getYourHairStylesFromServer =
 
 export const getHairStyleBankFromServer =
   (params, userId, onEnd, onChangeSession) => async (dispatch, getState) => {
+    if (!params.filter.style) delete params.filter.style;
+    if (!params.filter.gender) delete params.filter.gender;
+    if (!params.filter.file_type) delete params.filter.file_type;
+    if (Object.keys(params.filter).length === 0) delete params.filter;
     const response = await FileApi.getHairStyleBank(params);
     if (response.message === STATUS_MESSAGE.SUCCESS) {
       const { items, session } = response.data;
@@ -70,6 +83,9 @@ export const getHairStyleBankFromServer =
               displayName: item.user.display_name,
               avatar: addPrefixUrl(item.user.avatar),
             },
+            style: item.style,
+            gender: item.gender,
+            created_at: item.created_at,
             liked: item.liked,
             isOwn: userId === item.user.id,
           })),
@@ -78,8 +94,8 @@ export const getHairStyleBankFromServer =
     }
   };
 
-export const handleMarkPublic = async (id, status) => {
-  const response = await FileApi.markPublicFile(id, status);
+export const handleMarkPublic = async (data) => {
+  const response = await FileApi.markPublicFile(convertObjectToFormData(data));
   if (response.message === STATUS_MESSAGE.SUCCESS) {
     return response.data;
   }
@@ -138,17 +154,41 @@ export const shareItem = (item) => (dispatch) => {
   dispatch(changeItem({ ...item, public: true }));
 };
 
-export const deleteItem = (id) => async (dispatch, getState) => {
-  const response = await FileApi.deleteFile(id);
+export const deleteItems = (ids) => async (dispatch, getState) => {
+  const response = await FileApi.deleteFiles(JSON.stringify({ file_ids: ids }));
   if (response.message === STATUS_MESSAGE.SUCCESS) {
     const { yourHairStyles, hairStyleBank } = getState().hairStyles;
     dispatch({
       type: SET_HAIR_STYLE_BANK,
-      data: hairStyleBank.filter((item) => item.id !== id),
+      data: hairStyleBank.filter((item) => !ids.includes(item.id)),
     });
     dispatch({
       type: SET_YOUR_HAIR_STYLES,
-      data: yourHairStyles.filter((item) => item.id !== id),
+      data: yourHairStyles.filter((item) => !ids.includes(item.id)),
     });
+    return response;
   }
+  return null;
+};
+
+export const downloadItems = async (ids) => {
+  const response = await FileApi.downloadFiles(
+    ids.map((value) => `ids=${value}`).join("&")
+  );
+  if (response.message === STATUS_MESSAGE.SUCCESS) {
+    // const zip = await JSZip.loadAsync(response.data);
+    // console.log(zip);
+    // zip.forEach((relativePath, file) => {
+    //   if (file.dir) return;
+    //   // const uri = `${localBaseUri}${relativePath}`;
+    //   file.async("base64").then((base64) => {
+    //     // FileSystem.writeAsStringAsync(uri, base64, {
+    //     //   encoding: FileSystem.EncodingTypes.Base64,
+    //     // });
+    //   });
+    // });
+  }
+  console.log(response);
+
+  return null;
 };

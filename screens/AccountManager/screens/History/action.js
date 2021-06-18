@@ -56,13 +56,13 @@ export const handleGetStatusTextFromId = (status) => {
   return Object.values(JobStatus).find((item) => item.id === status).text;
 };
 
-export const deleteJob = (id) => async (dispatch, getState) => {
-  const response = await JobApi.deleteJob(id);
+export const deleteJobs = (ids) => async (dispatch, getState) => {
+  const response = await JobApi.deleteJobs(JSON.stringify({ job_ids: ids }));
   if (response.message === STATUS_MESSAGE.SUCCESS) {
     const { data } = getState().history;
     dispatch({
       type: SET_HISTORY,
-      data: data.filter((item) => item.id !== id),
+      data: data.filter((item) => !ids.includes(item.id)),
     });
   }
 };
@@ -70,10 +70,13 @@ export const deleteJob = (id) => async (dispatch, getState) => {
 export const getJobInfo = async (id) => {
   const response = await JobApi.readJob(id);
   if (response.message === STATUS_MESSAGE.SUCCESS) {
-    console.log(response.data);
     return {
-      // oriImage: addPrefixUrl(response.data.file_origin.uri),
-      // desImage: addPrefixUrl(response.data.file_example.uri),
+      oriImage: response.data.file_origin
+        ? addPrefixUrl(response.data.file_origin.uri)
+        : null,
+      desImage: response.data.file_example
+        ? addPrefixUrl(response.data.file_example.uri)
+        : null,
     };
   }
   return null;

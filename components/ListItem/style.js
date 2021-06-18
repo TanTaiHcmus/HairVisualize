@@ -19,7 +19,7 @@ export default StyleSheet.create({
     alignItems: "center",
   },
   containerVertical: {
-    paddingBottom: 200,
+    paddingBottom: 100,
   },
   loadingContainer: {
     width: 30,

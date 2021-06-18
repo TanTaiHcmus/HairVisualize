@@ -1,5 +1,5 @@
 import React from "react";
-import { ActivityIndicator, FlatList, View } from "react-native";
+import { ActivityIndicator, VirtualizedList, View } from "react-native";
 import withTranslate from "../../HOC/withTranslate";
 import TextCustom from "../TextCustom";
 import Styles from "./style";
@@ -17,6 +17,9 @@ const ListItem = ({
   handleItemToggleLike,
   handleToggleMarkPublic,
   handleDeleteItem,
+  toggleSelect,
+  itemsSelected,
+  navigation,
 }) => {
   const Loading = () => {
     return (
@@ -31,6 +34,18 @@ const ListItem = ({
     );
   };
 
+  const itemLength = isHorizontal ? 1 : 2;
+
+  const getItem = (data, index) => {
+    const items = [];
+
+    for (let i = 0; i < itemLength; i++) {
+      if (index * itemLength + i < data.length)
+        items.push(data[index * itemLength + i]);
+    }
+    return items;
+  };
+
   return (
     <View>
       {isHorizontal && (
@@ -43,25 +58,41 @@ const ListItem = ({
           />
         </View>
       )}
-      <FlatList
+      <VirtualizedList
         horizontal={isHorizontal}
         data={data}
+        getItemCount={(data) => Math.floor((data.length + 1) / itemLength)}
+        getItem={getItem}
         showsHorizontalScrollIndicator={isHorizontal && isShowIndicator}
         showsVerticalScrollIndicator={!isHorizontal && isShowIndicator}
-        renderItem={({ item }) => (
-          <ItemComponent
-            item={item}
-            handleItemToggleLike={handleItemToggleLike}
-            handleToggleMarkPublic={handleToggleMarkPublic}
-            handleDeleteItem={handleDeleteItem}
-            style={!isHorizontal ? Styles.itemVertical : Styles.itemHorizontal}
-          />
+        renderItem={({ item: itemColumn }) => (
+          <View style={{ flexDirection: "row" }}>
+            {itemColumn.map((item) => (
+              <ItemComponent
+                key={`${item.id}`}
+                item={item}
+                handleItemToggleLike={handleItemToggleLike}
+                handleToggleMarkPublic={handleToggleMarkPublic}
+                handleDeleteItem={handleDeleteItem}
+                toggleSelect={toggleSelect}
+                isSelected={
+                  itemsSelected &&
+                  itemsSelected.find((itemId) => item.id === itemId)
+                }
+                canSelect={!isHorizontal}
+                haveItemSelected={itemsSelected && itemsSelected.length > 0}
+                style={
+                  !isHorizontal ? Styles.itemVertical : Styles.itemHorizontal
+                }
+                navigation={navigation}
+              />
+            ))}
+          </View>
         )}
         removeClippedSubviews
-        keyExtractor={(item) => `${item.id}`}
+        keyExtractor={(item, index) => `${index}`}
         onEndReachedThreshold={0.5}
         onEndReached={onScrollEnd}
-        numColumns={!isHorizontal ? 2 : undefined}
         contentContainerStyle={
           isHorizontal ? Styles.containerHorizontal : Styles.containerVertical
         }

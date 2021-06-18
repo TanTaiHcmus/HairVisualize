@@ -21,7 +21,7 @@ const OptionsPopup = ({ translate, title, options, onExit }) => {
               title={option.title}
               onPress={() => {
                 option.onPress();
-                onExit();
+                if (!option.preventExit) onExit();
               }}
               style={Styles.option}
               key={index}

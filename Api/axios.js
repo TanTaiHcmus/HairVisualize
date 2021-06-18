@@ -7,6 +7,7 @@ import {
   checkExpiredToken,
   setTokenFromStorage,
   handleLogout,
+  convertObjectToFormData,
 } from "../utils";
 
 const Axios = axios.create({
@@ -39,15 +40,6 @@ Axios.interceptors.response.use(
     };
   }
 );
-
-const convertObjectToFormData = (params) => {
-  const data = new FormData();
-  Object.keys(params).forEach((key) => {
-    data.append(key, params[key]);
-  });
-  return data;
-};
-
 class Request {
   static refreshToken = null;
 
@@ -129,13 +121,14 @@ class Request {
     );
   };
 
-  static put = ({ url, params = {}, checkToken = true }) => {
+  static put = ({ url, params = {}, checkToken = true, data = {} }) => {
     return this.callApiWithCheckToken(
       () =>
         Axios({
           method: "put",
           url,
           params,
+          data,
         }),
       checkToken
     );
@@ -153,11 +146,9 @@ class Request {
     );
   };
 
-  static logout = async () => {
-    const response = await this.get({ url: "/auth/revoke" });
-    if (response.message === STATUS_MESSAGE.SUCCESS) {
-      handleLogout();
-    }
+  static logout = () => {
+    this.get({ url: "/auth/revoke" });
+    handleLogout();
   };
 
   static createWebSocket = () => {

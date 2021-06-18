@@ -67,5 +67,20 @@
     "des": "Ảnh mẫu",
     "ori": "Ảnh nguồn",
     "result": "Ảnh kết quả",
-    "result_info": "Thông tin kết quả"
+    "extracting": "Ảnh kết xuất",
+    "result_info": "Thông tin kết quả",
+    "download": "Tải",
+    "file_result_not_found": "Ảnh kết quả không tìm thấy",
+    "select_file": "Chọn file",
+    "male": "Nam",
+    "female": "Nữ",
+    "long": "Tóc dài",
+    "short": "Tóc ngắn",
+    "sort_type": "Loại sắp xếp",
+    "sort_order": "Thứ tự sắp xếp",
+    "filter": "Lọc kiểu tóc",
+    "type": "Loại ảnh",
+    "status": "Trạng thái",
+    "select_gender": "Chọn giới tính",
+    "select_style": "Chọn kiểu tóc"
 }

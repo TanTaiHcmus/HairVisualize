@@ -5,7 +5,12 @@ export default StyleSheet.create({
     backgroundColor: "#fff",
     flex: 1,
   },
-  filterContainer: {
-    marginTop: 15,
+  headerButtonContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  headerButton: {
+    color: "#fff",
+    paddingHorizontal: 8,
   },
 });
