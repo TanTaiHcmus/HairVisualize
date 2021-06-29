@@ -33,6 +33,7 @@ export const getHairLikesFromServer =
             public: item.public,
             liked: item.liked,
             isOwn: id === item.user.id,
+            file_type: item.file_type,
           })),
         ],
       });

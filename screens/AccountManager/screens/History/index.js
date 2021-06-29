@@ -51,7 +51,9 @@ const HistoryScreen = ({
     limit: LIMIT_VERTICAL_ITEMS,
     isEnd: false,
     sortType: SortOptions.Time.id,
-    sortOrder: SortOrderOptions.ASC.id,
+    sortOrder: SortOrderOptions.DESC.id,
+    prevSortOrder: SortOrderOptions.DESC.id,
+    prevSortType: SortOptions.Time.id,
   });
 
   const handleReadDataEnd = () => {
@@ -76,7 +78,7 @@ const HistoryScreen = ({
         limit: ref.current.limit,
         sort: generateToSortString(ref.current.sortType, ref.current.sortOrder),
         filter:
-          ref.current.status !== JobStatus.ALL.id
+          ref.current.status && ref.current.status !== JobStatus.ALL.id
             ? {
                 status: { $eq: ref.current.status },
               }
@@ -110,9 +112,11 @@ const HistoryScreen = ({
     const connectWebSocket = async () => {
       ref.current.ws = await Request.createWebSocket();
       ref.current.ws.onmessage = (event) => {
-        const { signal_type, job_id, status } = JSON.parse(event.data);
+        const { signal_type, job_id, status, error_code } = JSON.parse(
+          event.data
+        );
         if (signal_type === Signal_Type.SERVER_UPDATE) {
-          changeItemStatusConnect(job_id, status);
+          changeItemStatusConnect(job_id, status, error_code);
         }
       };
     };
@@ -154,7 +158,7 @@ const HistoryScreen = ({
       if (!isEmpty(item.image)) {
         navigation.navigate(Screens.ResultInfo, { id: item.id });
       } else {
-        Alert.alert(translate("file_result_not_found"));
+        Alert.alert(translate(item.error_log || "result_file_not_found"));
       }
     };
     return (
@@ -197,7 +201,7 @@ const HistoryScreen = ({
         {item.status < JobStatus.FINISHED.id ? (
           <TouchableOpacity
             onPress={() => {
-              if (ref.current.ws) {
+              if (ref.current.ws && item.status === JobStatus.PENDING.id) {
                 ref.current.ws.send(
                   JSON.stringify({
                     job_id: item.id,
@@ -207,7 +211,12 @@ const HistoryScreen = ({
                 changeItemStatusConnect(item.id, JobStatus.CANCEL.id);
               }
             }}
-            style={[Styles.itemControl, Styles.cancelButton, Styles.button]}
+            style={[
+              Styles.itemControl,
+              Styles.cancelButton,
+              Styles.button,
+              item.status > JobStatus.PENDING.id ? { opacity: 0.5 } : undefined,
+            ]}
           >
             <TextCustom title={translate("cancel")} style={Styles.text} />
           </TouchableOpacity>

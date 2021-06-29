@@ -1,7 +1,13 @@
-import React, { useMemo, useState, useRef } from "react";
-import { Image, TouchableOpacity, View } from "react-native";
+import React, { useMemo, useRef, useState } from "react";
+import { Alert, Image, TouchableOpacity, View } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
-import { GenderOptions, Screens, StyleOptions } from "../../constants";
+import {
+  FileTypeOptions,
+  GenderOptions,
+  Screens,
+  STATUS_MESSAGE,
+  StyleOptions,
+} from "../../constants";
 import withTranslate from "../../HOC/withTranslate";
 import {
   handleMarkFileLiked,
@@ -56,7 +62,7 @@ const Item = ({
   const handleMarkPublicItem = async () => {
     const response = await handleMarkPublic({
       id: item.id,
-      status: !item.public,
+      public: !item.public,
       ...(ref.current.gender && ref.current.style
         ? {
             gender: ref.current.gender || undefined,
@@ -64,33 +70,20 @@ const Item = ({
           }
         : {}),
     });
-    if (response) {
+    if (response.message === STATUS_MESSAGE.SUCCESS) {
       handleToggleMarkPublic({
         ...item,
         ...(ref.current.gender && ref.current.style
           ? { gender: ref.current.gender, style: ref.current.style }
           : {}),
       });
+      if (!item.public) {
+        Alert.alert(translate("share_image"));
+      }
+    } else {
+      Alert.alert(translate(response.data.data.message));
     }
   };
-
-  const onPressVisualizeOptions = useMemo(
-    () => [
-      {
-        title: translate("des"),
-        onPress: () => {
-          navigation.navigate(Screens.HairVisualize, { desImage: item.image });
-        },
-      },
-      {
-        title: translate("ori"),
-        onPress: () => {
-          navigation.navigate(Screens.HairVisualize, { oriImage: item.image });
-        },
-      },
-    ],
-    [item]
-  );
 
   const onPressGenderOptions = useMemo(
     () => [
@@ -163,13 +156,18 @@ const Item = ({
             },
           ]
         : []),
-      {
-        title: translate("visualize"),
-        onPress: () => {
-          setShowImageOptions(showImageOptionsStatus.VisualizeOptions);
-        },
-        preventExit: true,
-      },
+      ...(item.file_type !== FileTypeOptions.ORIGIN.id
+        ? [
+            {
+              title: translate("visualize"),
+              onPress: () => {
+                navigation.navigate(Screens.HairVisualize, {
+                  desImage: { image: item.image, id: item.id },
+                });
+              },
+            },
+          ]
+        : []),
     ],
     [item]
   );
@@ -207,9 +205,6 @@ const Item = ({
     switch (showImageOptions) {
       case showImageOptionsStatus.ItemOptions: {
         return "select_image_options";
-      }
-      case showImageOptionsStatus.VisualizeOptions: {
-        return "select_file";
       }
       case showImageOptionsStatus.GenderOptions: {
         return "select_gender";

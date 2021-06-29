@@ -1,24 +1,14 @@
 import { LinearGradient } from "expo-linear-gradient";
 import React, { useState } from "react";
-import { Alert, View } from "react-native";
-import Icon from "react-native-vector-icons/Ionicons";
+import { Alert, Image, View } from "react-native";
+import logoApp from "../../assets/logoApp.png";
 import ButtonGradient from "../../components/ButtonGradient";
-import ScrollContainer from "../../components/ScrollContainer";
 import DismissKeyboardView from "../../components/DismissKeyboardView";
 import KeyboardView from "../../components/KeyboardView";
+import ScrollContainer from "../../components/ScrollContainer";
 import TextCustom from "../../components/TextCustom";
 import TextInputWithIcon from "../../components/TextInputWithIcon";
-import {
-  AppName,
-  ConfirmPasswordIsEmpty,
-  ConfirmPasswordIsNotMatch,
-  DisplayNameIsEmpty,
-  EmailIsEmpty,
-  gradientBackground,
-  PasswordIsEmpty,
-  STATUS_MESSAGE,
-  UsernameIsEmpty,
-} from "../../constants";
+import { gradientBackground, STATUS_MESSAGE } from "../../constants";
 import withTranslate from "../../HOC/withTranslate";
 import { isEmpty } from "../../utils";
 import { registerToServer } from "./action";
@@ -33,27 +23,27 @@ const RegisterScreen = ({ translate, navigation }) => {
 
   const handleRegister = async () => {
     if (isEmpty(username)) {
-      Alert.alert(UsernameIsEmpty);
+      Alert.alert(translate("empty_username"));
       return;
     }
     if (isEmpty(email)) {
-      Alert.alert(EmailIsEmpty);
+      Alert.alert(translate("empty_email"));
       return;
     }
     if (isEmpty(displayName)) {
-      Alert.alert(DisplayNameIsEmpty);
+      Alert.alert(translate("empty_display_name"));
       return;
     }
     if (isEmpty(password)) {
-      Alert.alert(PasswordIsEmpty);
+      Alert.alert(translate("empty_password"));
       return;
     }
     if (isEmpty(confirmPassword)) {
-      Alert.alert(ConfirmPasswordIsEmpty);
+      Alert.alert(translate("empty_confirm_password"));
       return;
     }
     if (password !== confirmPassword) {
-      Alert.alert(ConfirmPasswordIsNotMatch);
+      Alert.alert(translate("confirm_password_not_match"));
       return;
     }
 
@@ -65,10 +55,10 @@ const RegisterScreen = ({ translate, navigation }) => {
     });
 
     if (response.message === STATUS_MESSAGE.SUCCESS) {
-      Alert.alert("Register successfully!");
+      Alert.alert(translate("register_success"));
       navigation.goBack();
     } else {
-      Alert.alert(response.data.data.message);
+      Alert.alert(translate(response.data.data.message));
     }
   };
 
@@ -82,8 +72,7 @@ const RegisterScreen = ({ translate, navigation }) => {
         <KeyboardView>
           <DismissKeyboardView>
             <View style={Styles.logoContainer}>
-              <Icon name="logo-instagram" style={Styles.logo} size={100} />
-              <TextCustom title={AppName} style={Styles.logoName} />
+              <Image source={logoApp} style={Styles.logo} />
             </View>
 
             <View style={Styles.inputContainer}>

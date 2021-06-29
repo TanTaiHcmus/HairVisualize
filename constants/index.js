@@ -1,6 +1,8 @@
 import { Dimensions } from "react-native";
 
-export const AppName = "Hair Visualize";
+export const AppName = "HaSi";
+
+export const AppVersion = 1;
 
 export const screenWidth = Math.round(Dimensions.get("window").width);
 export const screenHeight = Math.round(Dimensions.get("window").height);
@@ -56,12 +58,6 @@ export const EditUserInfoOptions = {
   Contact: "contact",
 };
 
-export const UsernameIsEmpty = "Username is empty!";
-export const DisplayNameIsEmpty = "Display name is empty!";
-export const EmailIsEmpty = "Email is empty!";
-export const PasswordIsEmpty = "Password is empty!";
-export const ConfirmPasswordIsEmpty = "Confirm password is empty!";
-export const ConfirmPasswordIsNotMatch = "Confirm password is not match!";
 export const INVALID_TOKEN_STATUS = 401;
 
 export const SortOptions = {

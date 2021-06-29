@@ -56,9 +56,9 @@ const HairStyleBank = ({
     limit: isHorizontal ? LIMIT_HORIZONTAL_ITEMS : LIMIT_VERTICAL_ITEMS,
     isEnd: false,
     sortType: SortOptions.Time.id,
-    sortOrder: SortOrderOptions.ASC.id,
+    sortOrder: SortOrderOptions.DESC.id,
     prevSortType: SortOptions.Time.id,
-    prevSortOrder: SortOrderOptions.ASC.id,
+    prevSortOrder: SortOrderOptions.DESC.id,
   });
 
   const toggleItemSelect = (id) => {
@@ -88,14 +88,15 @@ const HairStyleBank = ({
         sort: generateToSortString(ref.current.sortType, ref.current.sortOrder),
         filter: {
           style:
-            ref.current.style !== StyleOptions.ALL.id
+            ref.current.style && ref.current.style !== StyleOptions.ALL.id
               ? { $eq: ref.current.style }
               : null,
           gender:
-            ref.current.gender !== GenderOptions.ALL.id
+            ref.current.gender && ref.current.gender !== GenderOptions.ALL.id
               ? { $eq: ref.current.gender }
               : null,
           file_type:
+            ref.current.fileType &&
             ref.current.fileType !== FileTypeOptions.ALL.id
               ? { $eq: ref.current.fileType }
               : null,

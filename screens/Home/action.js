@@ -45,6 +45,7 @@ export const getYourHairStylesFromServer =
             style: item.style,
             gender: item.gender,
             isOwn: true,
+            file_type: item.file_type,
           })),
         ],
       });
@@ -88,6 +89,7 @@ export const getHairStyleBankFromServer =
             created_at: item.created_at,
             liked: item.liked,
             isOwn: userId === item.user.id,
+            file_type: item.file_type,
           })),
         ],
       });
@@ -96,10 +98,7 @@ export const getHairStyleBankFromServer =
 
 export const handleMarkPublic = async (data) => {
   const response = await FileApi.markPublicFile(convertObjectToFormData(data));
-  if (response.message === STATUS_MESSAGE.SUCCESS) {
-    return response.data;
-  }
-  return null;
+  return response;
 };
 
 export const handleMarkFileLiked = async (id, is_liked) => {

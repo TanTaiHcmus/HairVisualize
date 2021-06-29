@@ -8,6 +8,7 @@ import OptionsPopup from "../../components/OptionsPopup";
 import TextCustom from "../../components/TextCustom";
 import { gradientBackground, Screens } from "../../constants";
 import withTranslate from "../../HOC/withTranslate";
+import { getFileFromUri } from "../../utils";
 import { openCamera } from "../../utils/camera";
 import { openGallery } from "../../utils/gallery";
 import { handleVisualize } from "./action";
@@ -15,10 +16,10 @@ import Styles from "./style";
 
 const HairVisualizeScreen = ({ navigation, translate, route }) => {
   const [oriImage, setOriImage] = useState(
-    route.params ? route.params.oriImage : null
+    route.params && route.params.oriImage ? route.params.oriImage.image : null
   );
   const [desImage, setDesImage] = useState(
-    route.params ? route.params.desImage : null
+    route.params && route.params.desImage ? route.params.desImage.image : null
   );
   const [viewImage, setViewImage] = useState(null);
 
@@ -158,9 +159,21 @@ const HairVisualizeScreen = ({ navigation, translate, route }) => {
       }
       return;
     }
-    const response = await handleVisualize(desImage, oriImage);
+
+    const response = await handleVisualize({
+      ...(route.params &&
+      route.params.desImage &&
+      desImage === route.params.desImage.image
+        ? { example_file_id: route.params.desImage.id }
+        : { example_file: getFileFromUri(desImage) }),
+      ...(route.params &&
+      route.params.oriImage &&
+      oriImage === route.params.oriImage.image
+        ? { origin_file_id: route.params.oriImage.id }
+        : { origin_file: getFileFromUri(oriImage) }),
+    });
     if (response) {
-      navigation.navigate(Screens.History);
+      navigation.replace(Screens.History);
     }
   };
 

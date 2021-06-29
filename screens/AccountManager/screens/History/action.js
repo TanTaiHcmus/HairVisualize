@@ -5,6 +5,7 @@ import { addPrefixUrl } from "../../../../utils";
 
 export const getHistoryFromServer =
   (params, onEnd) => async (dispatch, getState) => {
+    if (!params.filter) delete params.filter;
     const response = await JobApi.readJobs(params);
     if (response.message === STATUS_MESSAGE.SUCCESS) {
       const { items } = response.data;
@@ -24,8 +25,9 @@ export const getHistoryFromServer =
               id: item.id,
               created_at: item.created_at,
               status: item.status,
-              image: item.file_result
-                ? addPrefixUrl(item.file_result.uri)
+              error_log: item.error_log,
+              image: item.result_file
+                ? addPrefixUrl(item.result_file.uri)
                 : null,
             };
           }),
@@ -34,23 +36,25 @@ export const getHistoryFromServer =
     }
   };
 
-export const changeItemStatus = (id, status) => async (dispatch, getState) => {
-  const { data } = getState().history;
-  const item = data.find((item) => item.id === id);
-  if (item) {
-    item.status = status;
-    if (status === JobStatus.FINISHED.id) {
-      const response = await JobApi.readJob(id);
-      if (response.message === STATUS_MESSAGE.SUCCESS) {
-        item.image = addPrefixUrl(response.data.file_result.uri);
+export const changeItemStatus =
+  (id, status, error_log) => async (dispatch, getState) => {
+    const { data } = getState().history;
+    const item = data.find((item) => item.id === id);
+    if (item) {
+      item.status = status;
+      item.error_log = error_log;
+      if (status === JobStatus.FINISHED.id) {
+        const response = await JobApi.readJob(id);
+        if (response.message === STATUS_MESSAGE.SUCCESS) {
+          item.image = addPrefixUrl(response.data.result_file.uri);
+        }
       }
+      dispatch({
+        type: SET_HISTORY,
+        data,
+      });
     }
-    dispatch({
-      type: SET_HISTORY,
-      data,
-    });
-  }
-};
+  };
 
 export const handleGetStatusTextFromId = (status) => {
   return Object.values(JobStatus).find((item) => item.id === status).text;
@@ -71,11 +75,17 @@ export const getJobInfo = async (id) => {
   const response = await JobApi.readJob(id);
   if (response.message === STATUS_MESSAGE.SUCCESS) {
     return {
-      oriImage: response.data.file_origin
-        ? addPrefixUrl(response.data.file_origin.uri)
+      oriImage: response.data.origin_file
+        ? {
+            image: addPrefixUrl(response.data.origin_file.uri),
+            id: response.data.origin_file.id,
+          }
         : null,
-      desImage: response.data.file_example
-        ? addPrefixUrl(response.data.file_example.uri)
+      desImage: response.data.example_file
+        ? {
+            image: addPrefixUrl(response.data.example_file.uri),
+            id: response.data.example_file.id,
+          }
         : null,
     };
   }

@@ -5,7 +5,13 @@ export default StyleSheet.create({
     flex: 1,
     alignItems: "center",
   },
-  logo: {
+  logoApp: {
     marginTop: 20,
+    width: 100,
+    height: 100,
+  },
+  logoText: {
+    marginTop: 10,
+    fontSize: 18,
   },
 });
