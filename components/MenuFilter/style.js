@@ -11,6 +11,7 @@ export default StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    marginBottom: 20,
   },
   filterText: {
     fontSize: 18,
@@ -27,5 +28,6 @@ export default StyleSheet.create({
     left: 0,
     width: screenWidth,
     height: screenHeight,
+    paddingBottom: 50,
   },
 });

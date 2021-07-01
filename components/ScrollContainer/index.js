@@ -3,7 +3,13 @@ import { ScrollView } from "react-native";
 
 const ScrollContainer = ({ children }) => {
   return (
-    <ScrollView keyboardShouldPersistTaps="handled">{children}</ScrollView>
+    <ScrollView
+      keyboardShouldPersistTaps="handled"
+      showsHorizontalScrollIndicator={false}
+      showsVerticalScrollIndicator={false}
+    >
+      {children}
+    </ScrollView>
   );
 };
 
