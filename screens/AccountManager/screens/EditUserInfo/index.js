@@ -93,7 +93,7 @@ const EditUSerInfoScreen = ({
     <KeyboardView>
       <DismissKeyboardView>
         <LoadingWrapper isLoading={isLoading} style={Styles.container}>
-          {renderChildFromRouteName()}
+          <View style={Styles.infoContainer}>{renderChildFromRouteName()}</View>
         </LoadingWrapper>
       </DismissKeyboardView>
     </KeyboardView>

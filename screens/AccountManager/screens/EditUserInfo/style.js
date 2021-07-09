@@ -3,9 +3,10 @@ import { StyleSheet } from "react-native";
 export default StyleSheet.create({
   container: {
     flex: 1,
+  },
+  infoContainer: {
+    padding: 20,
     backgroundColor: "#fff",
-    paddingHorizontal: 20,
-    paddingVertical: 40,
   },
   saveButton: {
     fontSize: 16,

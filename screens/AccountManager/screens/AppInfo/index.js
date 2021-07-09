@@ -10,14 +10,20 @@ const AppInfoScreen = ({ translate }) => {
   return (
     <View style={Styles.container}>
       <Image source={logoApp} style={Styles.logoApp} />
-      <TextCustom
-        title={`${translate("app_name")}: ${AppName}`}
-        style={Styles.logoText}
-      />
-      <TextCustom
-        title={`${translate("app_version")}: ${AppVersion}`}
-        style={Styles.logoText}
-      />
+      <View style={Styles.appInfoLine}>
+        <TextCustom
+          title={`${translate("app_name")}:`}
+          style={Styles.appInfoTitle}
+        />
+        <TextCustom title={AppName} style={Styles.appInfoValue} />
+      </View>
+      <View style={Styles.appInfoLine}>
+        <TextCustom
+          title={`${translate("app_version")}:`}
+          style={Styles.logoText}
+        />
+        <TextCustom title={AppVersion} style={Styles.appInfoValue} />
+      </View>
     </View>
   );
 };

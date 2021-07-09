@@ -10,8 +10,17 @@ export default StyleSheet.create({
     width: 100,
     height: 100,
   },
-  logoText: {
-    marginTop: 10,
+  appInfoLine: {
+    marginTop: 15,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  appInfoTitle: {
     fontSize: 18,
+  },
+  appInfoValue: {
+    fontSize: 18,
+    color: "#e253a0",
+    marginLeft: 5,
   },
 });

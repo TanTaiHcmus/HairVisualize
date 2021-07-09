@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "Hasi",
+    "name": "Hasiti",
     "icon": "./assets/logoApp.png",
-    "slug": "Hasi",
+    "slug": "Hasiti",
     "version": "1.0.0",
     "orientation": "portrait",
     "splash": {
@@ -22,7 +22,7 @@
         "backgroundColor": "#FFFFFF"
       },
       "versionCode": 1,
-      "package": "com.hcmus.hasi"
+      "package": "com.hcmus.hasiti"
     }
   }
 }

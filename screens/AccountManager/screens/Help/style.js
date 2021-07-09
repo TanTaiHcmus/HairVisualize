@@ -3,9 +3,10 @@ import { StyleSheet } from "react-native";
 export default StyleSheet.create({
   container: {
     flex: 1,
+  },
+  infoContainer: {
     backgroundColor: "#fff",
-    paddingHorizontal: 20,
-    paddingVertical: 40,
+    padding: 20,
   },
   sendButton: {
     fontSize: 16,

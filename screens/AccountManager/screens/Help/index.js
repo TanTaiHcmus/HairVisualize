@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { View } from "react-native";
 import DismissKeyboardView from "../../../../components/DismissKeyboardView";
 import EditText from "../../../../components/EditText";
 import KeyboardView from "../../../../components/KeyboardView";
@@ -34,13 +35,15 @@ const HelpScreen = ({ translate, navigation }) => {
     <KeyboardView>
       <DismissKeyboardView>
         <LoadingWrapper isLoading={isLoading} style={Styles.container}>
-          <EditText title={translate("help")}>
-            <TextInputCustom
-              value={text}
-              onChangeText={(text) => setText(text)}
-              multiline
-            />
-          </EditText>
+          <View style={Styles.infoContainer}>
+            <EditText title={translate("help")}>
+              <TextInputCustom
+                value={text}
+                onChangeText={(text) => setText(text)}
+                multiline
+              />
+            </EditText>
+          </View>
         </LoadingWrapper>
       </DismissKeyboardView>
     </KeyboardView>

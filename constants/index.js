@@ -1,6 +1,6 @@
 import { Dimensions } from "react-native";
 
-export const AppName = "HaSi";
+export const AppName = "HaSiti";
 
 export const AppVersion = 1;
 
@@ -17,9 +17,9 @@ export const LanguageOptions = {
   English: "en",
 };
 
-export const URL_SERVER = "http://175.41.151.101/api/v1";
+export const URL_SERVER = "http://hasiti.com/api/v1";
 
-export const WebSocketUrl = "ws://175.41.151.101/api/v1/websocket/?token=";
+export const WebSocketUrl = "ws://hasiti.com/api/v1/websocket/?token=";
 
 export const TOKEN = {
   ACCESS_TOKEN: "ACCESS_TOKEN",
