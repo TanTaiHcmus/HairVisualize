@@ -187,7 +187,6 @@ export const downloadItems = async (ids) => {
     //   });
     // });
   }
-  console.log(response);
 
   return null;
 };

@@ -1,13 +1,12 @@
 import axios from "axios";
-import FormData from "form-data";
 import { STATUS_MESSAGE, TOKEN, URL_SERVER, WebSocketUrl } from "../constants";
 import {
-  getTokenFromStorage,
-  isEmpty,
   checkExpiredToken,
-  setTokenFromStorage,
-  handleLogout,
   convertObjectToFormData,
+  getTokenFromStorage,
+  handleLogout,
+  isEmpty,
+  setTokenFromStorage,
 } from "../utils";
 
 const Axios = axios.create({
@@ -42,6 +41,8 @@ Axios.interceptors.response.use(
 );
 class Request {
   static refreshToken = null;
+  static webSocket = null;
+  static isRefreshToken = true;
 
   static callApiWithCheckToken = async (callApi, checkToken) => {
     const { expiry: expiry_access_token } = await getTokenFromStorage(
@@ -50,6 +51,7 @@ class Request {
     if (!checkToken || checkExpiredToken(expiry_access_token)) {
       return callApi();
     } else {
+      this.isRefreshToken = true;
       const { value: refresh_token, expiry: expiry_refresh_token } =
         await getTokenFromStorage(TOKEN.REFRESH_TOKEN);
       if (checkExpiredToken(expiry_refresh_token)) {
@@ -147,15 +149,19 @@ class Request {
   };
 
   static logout = () => {
+    this.isRefreshToken = true;
     this.get({ url: "/auth/revoke" });
     handleLogout();
   };
 
   static createWebSocket = () => {
     return this.callApiWithCheckToken(async () => {
-      const { value: token } = await getTokenFromStorage(TOKEN.ACCESS_TOKEN);
-      const ws = new WebSocket(WebSocketUrl + token);
-      return ws;
+      if (this.isRefreshToken) {
+        const { value: token } = await getTokenFromStorage(TOKEN.ACCESS_TOKEN);
+        this.webSocket = new WebSocket(WebSocketUrl + token);
+        this.isRefreshToken = false;
+      }
+      return this.webSocket;
     }, true);
   };
 }
