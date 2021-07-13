@@ -259,13 +259,15 @@ const Item = ({
               setIsViewImage(false);
             }}
           >
-            <Image
-              style={Styles.image}
-              source={{
-                uri: item.image,
-              }}
-              resizeMode="stretch"
-            />
+            <View style={Styles.imageBackground}>
+              <Image
+                style={Styles.image}
+                source={{
+                  uri: item.image,
+                }}
+                resizeMode="stretch"
+              />
+            </View>
           </ModalCustom>
         )}
         {isSelected && (

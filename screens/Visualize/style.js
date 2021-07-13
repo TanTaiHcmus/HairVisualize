@@ -42,6 +42,9 @@ export default StyleSheet.create({
     shadowColor: "#000",
     shadowOpacity: 0.8,
   },
+  imageBackground: {
+    backgroundColor: "#fff",
+  },
   image: {
     aspectRatio: 3 / 4,
   },

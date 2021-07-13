@@ -205,13 +205,15 @@ const HairVisualizeScreen = ({ navigation, translate, route }) => {
             setViewImage(null);
           }}
         >
-          <Image
-            style={Styles.image}
-            source={{
-              uri: viewImage,
-            }}
-            resizeMode="stretch"
-          />
+          <View style={Styles.imageBackground}>
+            <Image
+              style={Styles.image}
+              source={{
+                uri: viewImage,
+              }}
+              resizeMode="stretch"
+            />
+          </View>
         </ModalCustom>
       )}
     </View>

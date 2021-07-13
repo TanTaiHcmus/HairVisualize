@@ -9,6 +9,9 @@ export default StyleSheet.create({
     shadowOpacity: 0.8,
     overflow: "hidden",
   },
+  imageBackground: {
+    backgroundColor: "#fff",
+  },
   image: {
     aspectRatio: 3 / 4,
   },
